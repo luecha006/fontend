@@ -13,6 +13,8 @@ export class AppComponent implements OnInit {
   countries!: any[];
 
   selectedCity1: any;
+  cities: any;
+  selectedCity: any;
   value1: any;
 
   constructor(private primengConfig: PrimeNGConfig) { }
