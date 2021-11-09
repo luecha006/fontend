@@ -1,21 +1,194 @@
-<h5>Inline</h5>
-<input type="text" pInputText class="mr-2 d-inline" />
-<input type="text" pInputText class="d-inline" />
+<!-- <div class="spacer"></div> -->
 
-<h5>Block</h5>
-<input type="text" pInputText class="mb-2 p-d-block" />
-<input type="text" pInputText class="d-block" />
+<div class="container-fluid shadow-3 py-2">
+    <div class="grid">
+        <div class="col-12 md-12 lg-12 d-flex align-items-center
+            justify-content-start" style="padding-bottom: 0px;">
+            <img src="assets/logo-rmutt.jpg" alt="logo-rmutt">
+            <h3 class="d-none d-md-inline-flex mb-0">
+                ระบบตรวจสอบความถูกต้องในการใส่หน้ากากอนามัย
+            </h3>
 
-<h5>Visible on a Small Screen</h5>
-<p>Resize to view.</p>
-<p-button type="button" icon="pi pi-bars" styleClass="p-button-rounded p-d-md-none"></p-button>
+            <div class="spacer"></div>
 
-<h5>Hidden on a Small Screen</h5>
-<p>Resize to hide.</p>
-<p-button type="button" icon="pi pi-search" styleClass="p-button-rounded p-button-success p-d-none p-d-md-inline-flex"></p-button>
+            <button pButton pRipple type="button" icon="pi pi-bell" class="p-button-rounded mr-3" badge="8"
+                badgeClass="p-badge-danger" style="display: flexbox; float:
+                right; border: none; height: 30px; width: 30px;" (click)="bell.toggle($event)" [ngStyle]="{color:'var(--blue-500)'
+                ,backgroundColor:'var(--gray-200)'}">
+            </button>
 
-<h5>Visible to Print, Invisible for Screen</h5>
-<p class="p-d-none p-d-print-block">Only visible when printed.</p>
+            <p-menu #bell [popup]="true" [model]="list_Warn" appendTo="body" visible="'false'" [style]="{'width': 'auto','font-family':'Bai
+                Jamjuree, sans-serif','color':'black'}"></p-menu>
 
-<h5>Visible to Screen, Invisible for Print</h5>
-<p class="p-d-block p-d-print-none">Not available for printing.</p>
+            <p-button-icon pButton pRipple class="p-button-text border-radius mt-0 style-font" type="button"
+                label="{{admin_name}}" label="Log in" icon="pi pi-fw pi-angle-down" (click)="admin.toggle($event)"
+                style=" background-color: white; color: black; border: none ;border-radius: 0; border-left:'1px solid var(--surface-d)';"
+                iconPos="right">
+                <span class="backgroundColor-icons" style="margin-right: 10px;">
+                    <i class="pi pi-fw pi-user"></i> </span>
+            </p-button-icon>
+            <p-menu #admin [popup]="true" [model]="list_Users" appendTo="body" [style]="{'width': 'auto','font-family':'Bai Jamjuree,
+                sans-serif','color':'black', 'padding-right':'20px'}">
+            </p-menu>
+        </div>
+    </div>
+</div>
+
+<div class="my-2">
+    <div class="d-flex grid">
+        <div class="col-2">
+            <p-menu [styleClass]="'py-4 ml-2 shadow-1'" [model]="list_Menu" iconPos="right"
+                [style]="{'font-family':'Bai Jamjuree, sans-serif','color':'black'}">
+            </p-menu>
+        </div>
+        <div class="col-10">
+            <!-- <router-outlet></router-outlet> -->
+        </div>
+    </div>
+</div>
+
+<!-- ------------------------------------------- เพิ่มสมาชิก ----------------------------------------------- -->
+<p-dialog header="" [(visible)]="isAddUser_Form" [modal]="true" [style]="{width: '25%','height':'auto'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
+    <div class="mt-0 mb-5">
+        <h5 class="mb-4 p-2" style="text-align: center;"> เพิ่มสมาชิก </h5>
+        <div class="grid">
+            <div class="col">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                    <input type="text" pInputText [(ngModel)]="add_Username" placeholder="Username"
+                        [style]="{'width' : '100%'}">
+                </div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                    <input type="password" pPassword [(ngModel)]="add_Password" placeholder="Password" />
+                </div>
+            </div>
+        </div>
+        <small id="username2-help" class="p-invalid" style="color: red;">{{message_error_AddUser}}</small>
+        <div class="grid row mt-3">
+            <div class="col">
+                <p-button icon="pi pi-times" (click)="onCancel_AddUser()" label="ยกเลิก"
+                    class="p-button-text style-font" [style]="{'width' : '100%'}">
+                </p-button>
+            </div>
+            <div class="col">
+                <p-button icon="pi pi-check" (click)="onCleck_AddUser()" label="ยืนยัน" class="p-button-text style-font"
+                    [style]="{'width' : '100%'}">
+                </p-button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<!-- ------------------------------------------ log in -------------------------------------------- -->
+<p-dialog header="" [(visible)]="isLogout_form" [modal]="true" [style]="{width: '25%','height':'auto'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
+    <div class="mt-0 mb-5">
+        <h5 class="mb-5 style-font p-2" style="text-align: center;"> เข้าสู่ระบบ </h5>
+        <div class="grid">
+            <div class="col" style="width: 100%;">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                    <input type="text" pInputText [(ngModel)]="login_Username" placeholder="Username">
+                </div>
+            </div>
+        </div>
+
+        <div class="grid row">
+            <div class="col" style="width: 100%;">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                    <input type="password" pPassword [(ngModel)]="login_Password" placeholder="Password" />
+                    <!-- <input type="text" pInputText placeholder="Password"> -->
+                </div>
+                <small id="username2-help" class="p-invalid" style="color: red;">{{message_error_Login}}</small>
+            </div>
+        </div>
+        <div class="d-flex p-field-checkbox">
+            <p-checkbox [(ngModel)]="remember_Me" [binary]="true" inputId="binary"></p-checkbox>
+            <label class="ml-1" for="binary">Remember me</label>
+        </div>
+
+        <div class="grid row mt-3">
+            <div class="col">
+                <p-button icon="pi pi-times" (click)=" onCancel_Login()" label="ยกเลิก" [style]="{'width' : '100%'}">
+                </p-button>
+            </div>
+            <div class="col">
+                <p-button icon="pi pi-check" (click)="onClick_login()" label="ยืนยัน" class="p-button-text style-font"
+                    [style]="{'width' : '100%'}">
+                </p-button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<!-- ------------------------------------------- เปลี่ยนรหัสผ่าน ----------------------------------------------- -->
+<p-dialog header="" [(visible)]="isChangPassWord_Form" [modal]="true" [style]="{width: '25%','height':'auto'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
+    <div class="mt-0 mb-4">
+        <h5 class="mb-5 p-2" style="text-align: center;"> เปลี่ยนรหัสผ่าน </h5>
+        <div class="grid">
+            <div class="col">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                    <input type="password" pPassword [(ngModel)]="new_Password1" placeholder="Password" />
+                </div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                    <input type="password" pPassword [(ngModel)]="new_Password2" placeholder="Confirm Password" />
+                </div>
+            </div>
+        </div>
+        <small id="username2-help" class="p-invalid" style="color: red;">{{message_error_Changpassword}}</small>
+        <div class="grid row mt-3">
+            <div class="col">
+                <p-button icon="pi pi-times" (click)="onCancel_ChangPassword()" label="ยกเลิก"
+                    class="p-button-text style-font" [style]="{'width' : '100%'}">
+                </p-button>
+            </div>
+            <div class="col">
+                <p-button icon="pi pi-check" (click)="onClick_ChangPassword()" label="ยืนยัน"
+                    class="p-button-text style-font" [style]="{'width' : '100%'}">
+                </p-button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
+<!-- ------------------------------------------- ตั้งค่าอุณหภูมิ ----------------------------------------------- -->
+<p-dialog header="" [(visible)]="isSetTemperature_form" [modal]="true" [style]="{width: '25%','height':'auto'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
+    <div class="mt-0 mb-4">
+        <h5 class="mb-5 p-2" style="text-align: center;"> ตั้งค่าอุณหภูมิ </h5>
+        <div class="grid d-flex flex-column">
+            <div class="col">
+                <p style="text-align: center;">{{ start_Temperature }}</p>
+            </div>
+            <div class="col">
+                <p-slider [(ngModel)]="start_Temperature" [min]="0" [max]="100" [step]="0.5"></p-slider>
+            </div>
+        </div>
+        <div class="grid row mt-3">
+            <!-- <div class="p-col">
+               <p-button icon="pi pi-times" (click)="onCancel_SetTemPeraTure()" label="ยกเลิก"
+                  class="p-button-text style-font" [style]="{'width' : '100%'}">
+               </p-button>
+            </div> -->
+            <div class="col">
+                <p-button icon="pi pi-check" (click)="onCleck_SetTemPeraTure()" label="ยืนยัน"
+                    class="p-button-text style-font" [style]="{'width' : '100%'}">
+                </p-button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

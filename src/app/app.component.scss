@@ -1,21 +1,19 @@
-// @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
 // @import "~font-awesome/css/font-awesome.min.css";
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300&display=swap');
 $c10: #2399e5;
 $c10-gray: #e0e0e0;
-// h1,
-// h2,
-// h3,
-// h4,
-// h5,
-// h6 {
-//     color: black;
-//     padding: 0px;
-//     margin: 0px;
-//     font-family: 'Bai Jamjuree', sans-serif;
-//     //font-family: "IBM Plex Sans Thai", sans-serif;
-// }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: black;
+    font-family: 'Bai Jamjuree', sans-serif;
+}
+
 p {
     margin: 0;
 }
