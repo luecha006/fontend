@@ -1,0 +1,14 @@
+/* @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.min.css"; */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300&display=swap');
+
+.style-font{
+    font-family: 'Bai Jamjuree', sans-serif;
+}
+
+/* .style-table{
+    padding : 10px;
+    margin : 0px;
+    font-family: 'Bai Jamjuree', sans-serif;
+} */

@@ -8,6 +8,12 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+
+import { HomeModule } from './home/home.module';
+import { SearchInformationModule } from './search-information/search-information.module';
+import { ExportModule } from './export/export.module';
+import { DisplayTableModule } from './display-table/display-table.module';
 
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
@@ -29,6 +35,11 @@ registerLocaleData(en);
     AppComponent
   ],
   imports: [
+    HomeModule,
+    SearchInformationModule,
+    ExportModule,
+    DisplayTableModule,
+
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -36,6 +47,7 @@ registerLocaleData(en);
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
+    AppRoutingModule,
 
     InputTextModule,
     ButtonModule,

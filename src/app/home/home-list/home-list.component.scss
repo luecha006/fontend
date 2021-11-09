@@ -1,0 +1,15 @@
+// s
+@import '~primeng/resources/primeng.min.css';
+:host ::ng-deep .p-dropdown {
+  width: 14rem;
+}
+
+.chart-container {
+  width: 50%;
+  height: 50%;
+  margin: auto;
+}
+
+.style-font{
+  font-family: 'Bai Jamjuree', sans-serif;
+}

@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   //items: any[];
   items: MenuItem[];
 
-  constructor(private primengConfig: PrimeNGConfig) {
+  constructor(private primengConfig: PrimeNGConfig, private router: Router) {
     this.remember_Me = false;
     this.isLogin = false;
     this.start_Temperature = 37.5;
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
     this.add_Password = "";
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
 
     this.primengConfig.ripple = true;
     this.check_Login();
@@ -293,23 +293,23 @@ export class AppComponent implements OnInit {
   }
 
   display_Home(): void {
-    // this.router.navigate([{ outlets: { primary: "home" } }], {
-    //   skipLocationChange: true,
-    // });
+    this.router.navigate([{ outlets: { primary: "home" } }], {
+      skipLocationChange: true,
+    });
   }
   display_Table(): void {
-    // this.router.navigate([{ outlets: { primary: "display-table" } }], {
-    //   skipLocationChange: true,
-    // });
+    this.router.navigate(["/display-table"], {
+      skipLocationChange: true,
+    });
   }
   display_SearchInformation(): void {
-    // this.router.navigate([{ outlets: { primary: "search-information" } }], {
-    //   skipLocationChange: true,
-    // });
+    this.router.navigate([{ outlets: { primary: "search-information" } }], {
+      skipLocationChange: true,
+    });
   }
   display_Export(): void {
-    // this.router.navigate([{ outlets: { primary: "export" } }], {
-    //   skipLocationChange: true,
-    // });
+    this.router.navigate([{ outlets: { primary: "export" } }], {
+      skipLocationChange: true,
+    });
   }
 }
