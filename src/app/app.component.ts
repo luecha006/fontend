@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { MenuItem, PrimeNGConfig, SelectItem } from "primeng/api";
 
 @Component({
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   //items: any[];
   items: MenuItem[];
 
-  constructor(private primengConfig: PrimeNGConfig, private router: Router) {
+  constructor(private primengConfig: PrimeNGConfig, private router: Router, private activatedRoute: ActivatedRoute) {
     this.remember_Me = false;
     this.isLogin = false;
     this.start_Temperature = 37.5;
@@ -293,23 +293,23 @@ export class AppComponent implements OnInit {
   }
 
   display_Home(): void {
-    this.router.navigate([{ outlets: { primary: "home" } }], {
-      skipLocationChange: true,
-    });
+    this.router.navigate(
+      ["home"],
+      { relativeTo: this.activatedRoute.parent });
   }
   display_Table(): void {
-    this.router.navigate(["/display-table"], {
-      skipLocationChange: true,
-    });
+    this.router.navigate(
+      ["display-table"],
+      { relativeTo: this.activatedRoute.parent });
   }
   display_SearchInformation(): void {
-    this.router.navigate([{ outlets: { primary: "search-information" } }], {
-      skipLocationChange: true,
-    });
+    this.router.navigate(
+      ["search-information"],
+      { relativeTo: this.activatedRoute.parent });
   }
   display_Export(): void {
-    this.router.navigate([{ outlets: { primary: "export" } }], {
-      skipLocationChange: true,
-    });
+    this.router.navigate(
+      ["export"],
+      { relativeTo: this.activatedRoute.parent });
   }
 }

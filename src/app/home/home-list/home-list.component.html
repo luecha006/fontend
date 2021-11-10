@@ -1,20 +1,20 @@
-<p>home-list works!</p>
+<!-- <p>home-list works!</p> -->
 
-<!-- <div class="card p-p-2 p-mr-2">
-    <div class="p-d-flex p-jc-start p-ai-center" [ngStyle]="{backgroundColor:'var(--blue-500)'}">
-        <i class="pi pi-home p-ml-2" style="color: white; font-size:18px"></i>
-        <h5 class="p-p-2 p-m-0  style-font" style="color: white"> C10 : หน้าแรก</h5>
+<div class="card p-2 mr-2">
+    <div class="d-flex justify-content-start align-items-center" [ngStyle]="{backgroundColor:'var(--blue-500)'}">
+        <i class="pi pi-home ml-2" style="color: white; font-size:18px"></i>
+        <h5 class="p-2 m-0  style-font" style="color: white"> C10 : หน้าแรก</h5>
     </div>
 
-    <div class="p-flex-column p-flex-md-row p-d-flex p-jc-between p-ai-center p-mt-2">
-        <span class="p-ai-center">
-            <label class="p-col-fixed p-pl-0" style="width: auto">รูปแบบการแสดง</label>
+    <div class="flex-md-row d-flex justify-content-between align-items-center mt-2">
+        <span class="align-items-center">
+            <label class="col-fixed pl-0" style="width: auto">รูปแบบการแสดง</label>
             <p-dropdown [options]="item_Pattern" [(ngModel)]="value_Pattern" placeholder="แสดงเป็นวัน"></p-dropdown>
         </span>
 
-        <span>
-            <label class="p-col-fixed" style="width: auto">ช่วงเวลาที่แสดง</label>
-            <p-calendar class="p-mr-2" [(ngModel)]="s_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
+        <span class="align-items-center">
+            <label class="col-fixed" style="width: auto">ช่วงเวลาที่แสดง</label>
+            <p-calendar class="mr-2" [(ngModel)]="s_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
                 placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true" inputStyleClass="text-center">
             </p-calendar>
             <p-calendar [(ngModel)]="e_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
@@ -22,11 +22,11 @@
             </p-calendar>
         </span>
 
-        <span>
+        <span class="align-items-center">
             <p-button icon="pi pi-check" (click)="onConfirm()" label="ยืนยัน" class="p-button-text">
             </p-button>
         </span>
     </div>
-    <br> -->
+    <br>
     <!-- <p-chart type="line" [data]="data"></p-chart> -->
-<!-- </div> -->
+</div>
