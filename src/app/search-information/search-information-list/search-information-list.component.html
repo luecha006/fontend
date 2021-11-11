@@ -1,6 +1,133 @@
 <div class="card p-2 mr-2">
-    <div class="d-flex justify-content-start align-items-center" [ngStyle]="{backgroundColor:'var(--blue-500)'}">
+    <div class="d-flex justify-content-start align-items-center mb-2" [ngStyle]="{backgroundColor:'var(--blue-500)'}">
         <i class="pi pi-search ml-2" style="color: white; font-size:18px"></i>
         <h5 class="p-2 m-0  style-font" style="color: white"> C10 : หน้าค้นหาข้อมูล </h5>
     </div>
+
+    <div class="grid">
+        <div class="col-3 d-flex justify-content-end align-items-center">
+            <label for="time" class="col-fixed" style="width: auto">เวลา</label>
+        </div>
+        <div class="col-9 d-flex justify-content-start align-items-center">
+            <p-calendar class="mr-3" [(ngModel)]="s_Time" [showIcon]="true" inputId="time" [timeOnly]="true"
+                hourFormat="24" placeholder="เวลาเริ่มต้น" [maxDate]="e_Time" [readonlyInput]="true"
+                inputStyleClass="text-center" [style]="{'width': '250px','height': '38px'}">
+            </p-calendar>
+
+            <p-calendar [(ngModel)]="e_Time" [showIcon]="true" inputId="time" [timeOnly]="true"
+                placeholder="เวลาสิ้นสุด" [minDate]="s_Time" [readonlyInput]="true" inputStyleClass="text-center"
+                [style]="{'width': '250px','height': '38px'}">
+            </p-calendar>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-3 d-flex justify-content-end align-items-center">
+            <label class="col-fixed" style="width: auto">วันที่</label>
+        </div>
+        <div class="col-9 d-flex justify-content-start align-items-center">
+            <p-calendar class="mr-3" [(ngModel)]="s_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
+                placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true" inputStyleClass="text-center"
+                [style]="{'width': '250px','height': '38px'}">
+            </p-calendar>
+
+            <p-calendar [(ngModel)]="e_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
+                placeholder="วันที่สิ้นสุด" [minDate]="s_Date" [readonlyInput]="true" inputStyleClass="text-center"
+                [style]="{'width': '250px','height': '38px'}">
+            </p-calendar>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col-3 d-flex justify-content-end align-items-center">
+            <label class="col-fixed" for="selset_Sem">อุณหภูมิ</label>
+        </div>
+        <div class="col-9 d-flex justify-content-start align-items-center">
+            <p-inputNumber class="mr-3" [(ngModel)]="start_Semperature" inputId="selset_Sem" mode="decimal"
+                [showButtons]="true" placeholder="อุณหภูมิเริ่มต้น" [minFractionDigits]="1" [maxFractionDigits]="5"
+                [min]="0" [max]="100" [step]="0.5" inputStyleClass="text-center"
+                [style]="{'width': '250px','height': '38px'}">
+            </p-inputNumber>
+
+            <p-inputNumber [(ngModel)]="end_Semperature" mode="decimal" [showButtons]="true" inputId="selset_Sem"
+                mode="decimal" [min]="0" placeholder="อุณหภูมิสิ้นสุด" [max]="100" inputStyleClass="text-center"
+                [minFractionDigits]="1" [maxFractionDigits]="5" [min]="0" [max]="100" [step]="0.5"
+                [style]="{'width': '250px','height': '38px'}">
+            </p-inputNumber>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col-3 d-flex justify-content-end align-items-start">
+            <label class="col-fixed">รูปแบบการใส่หน้ากาก</label>
+        </div>
+        <div class="col-9 pr-3 d-flex flex-wrap justify-content-start align-items-center">
+            <p-dropdown class="text-center" [(ngModel)]="value_Pattern" placeholder="ทั้งหมด" [options]="mask_Pattern"
+            [style]="{'width': '250px','height': '38px'}"></p-dropdown>
+        </div>
+
+        <!-- <div class="col-6 pr-3 d-flex flex-wrap justify-content-start align-items-center">
+            <span class="p-field-radiobutton mr-5">
+                <p-radioButton class="mr-2" name="maskPattern" value="all" [(ngModel)]="maskPattern"
+                    inputId="maskPattern1"></p-radioButton>
+                <label for="maskPattern1">ทั้งหมด</label>
+            </span>
+            <span class="p-field-radiobutton mx-5">
+                <p-radioButton class="mr-2" name="maskPattern" value="unknow" [(ngModel)]="maskPattern"
+                    inputId="maskPattern2"></p-radioButton>
+                <label for="maskPattern2">ระบุไม่ได้</label>
+            </span>
+            <span class="p-field-radiobutton ml-5">
+                <p-radioButton class="mr-2" name="maskPattern" value="incorrect" [(ngModel)]="maskPattern"
+                    inputId="maskPattern3"></p-radioButton>
+                <label for="maskPattern3">ใส่หน้ากากอนามัยผิดวิธี</label>
+            </span>
+            <span class="p-field-radiobutton mr-5">
+                <p-radioButton class="mr-2" name="maskPattern" value="correct" [(ngModel)]="maskPattern"
+                    inputId="maskPattern4"></p-radioButton>
+                <label for="maskPattern4">ใส่หน้ากากอนามัยถูกวิธี</label>
+            </span>
+            <span class="p-field-radiobutton mx-5">
+                <p-radioButton class="mr-2" name="maskPattern" value="nomask" [(ngModel)]="maskPattern"
+                    inputId="maskPattern5"></p-radioButton>
+                <label for="maskPattern5">ไม่ได้ใส่หน้ากากอนามัย</label>
+            </span>
+        </div> -->
+        <!-- <div class="col-3"></div> -->
+    </div>
+    <div class="grid mt-1">
+        <div class="col-3"></div>
+        <div class="col-6 pr-3 d-flex flex-wrap justify-content-start align-items-center">
+            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger mr-3"
+                (click)="onClear()" label="ล้าง" [style]="{'width': '250px','height': '38px'}">
+            </button>
+            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded" (click)="onSearch()"
+                label="ค้นหา" [style]="{'width': '250px','height': '38px'}">
+            </button>
+        </div>
+    </div>
+    <br>
+
+    <p-table class="d-inline" [value]="data_display" [resizableColumns]="true" styleClass="p-datatable-gridlines"
+        [rows]="6" [paginator]="true" [pageLinks]="4" selectionMode="single" sortMode="single">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="p-1 style-font" style="width: 15%; text-align:
+                    center;">วันที่</th>
+                <th class="p-1 style-font" style="width: 15%; text-align:
+                    center;">เวลา</th>
+                <th class="p-1 style-font" style="width: 45%; text-align:
+                    center;">รูปแบบการใส่หน้ากากอนามัย</th>
+                <th class="p-1 style-font" style="width: 15%; text-align:
+                    center;">อุณหภูมิ</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-col>
+            <tr>
+                <td class="p-1 style-font" style="text-align: center;">{{col.A}}</td>
+                <td class="p-1 style-font" style="text-align: center;">{{col.B}}</td>
+                <td class="p-1 style-font" style="text-align: center;">{{col.A}}</td>
+                <td class="p-1 style-font" style="text-align: center;">{{col.B}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

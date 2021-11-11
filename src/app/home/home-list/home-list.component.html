@@ -6,27 +6,30 @@
         <h5 class="p-2 m-0  style-font" style="color: white"> C10 : หน้าแรก</h5>
     </div>
 
-    <div class="flex-md-row d-flex justify-content-between align-items-center mt-2">
-        <span class="align-items-center">
+    <div class="flex-column flex-md-row d-flex justify-content-between align-items-center mt-2">
+        <span>
             <label class="col-fixed pl-0" style="width: auto">รูปแบบการแสดง</label>
-            <p-dropdown [options]="item_Pattern" [(ngModel)]="value_Pattern" placeholder="แสดงเป็นวัน"></p-dropdown>
+            <p-dropdown class="text-center" [(ngModel)]="value_Pattern" placeholder="แสดงเป็นวัน"
+                [options]="item_Pattern" [style]="{'width': '250px'}"></p-dropdown>
         </span>
 
-        <span class="align-items-center">
+        <span>
             <label class="col-fixed" style="width: auto">ช่วงเวลาที่แสดง</label>
             <p-calendar class="mr-2" [(ngModel)]="s_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
-                placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true" inputStyleClass="text-center">
+                placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true" inputStyleClass="p-text-center"
+                [style]="{'width': '250px'}">
             </p-calendar>
             <p-calendar [(ngModel)]="e_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
-                placeholder="วันที่สิ้นสุด" [minDate]="s_Date" [readonlyInput]="true" inputStyleClass="text-center">
+                placeholder="วันที่สิ้นสุด" [minDate]="s_Date" [readonlyInput]="true" inputStyleClass="p-text-center"
+                [style]="{'width': '250px'}">
             </p-calendar>
         </span>
-
-        <span class="align-items-center">
+        <span>
             <p-button icon="pi pi-check" (click)="onConfirm()" label="ยืนยัน" class="p-button-text">
             </p-button>
         </span>
     </div>
     <br>
+
     <!-- <p-chart type="line" [data]="data"></p-chart> -->
 </div>

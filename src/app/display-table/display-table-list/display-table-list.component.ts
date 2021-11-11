@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+// import { HttpClient } from "@angular/common/http";
+// import { Injectable } from "@angular/core";
 
 @Component({
   selector: "app-display-table-list",
   templateUrl: "./display-table-list.component.html",
-  styleUrls: ["./display-table-list.component.css"],
+  styleUrls: ["./display-table-list.component.scss"],
 })
 export class DisplayTableListComponent implements OnInit {
 
@@ -14,6 +14,11 @@ export class DisplayTableListComponent implements OnInit {
   // constructor(private carService: CarService) {}
   constructor() {
 
+
+
+  }
+
+  ngOnInit(): void {
     this.cols = [
       { A: "A1", B: "B1" },
       { A: "A2", B: "B2" },
@@ -46,10 +51,7 @@ export class DisplayTableListComponent implements OnInit {
       { A: "A29", B: "B1" },
       { A: "A30", B: "B2" }
     ];
-    
   }
 
-  ngOnInit(): void {}
-
-  onBack(): void {}
+  onBack(): void { }
 }

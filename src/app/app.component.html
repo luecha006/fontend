@@ -17,7 +17,7 @@
                 ,backgroundColor:'var(--gray-200)'}">
             </button>
 
-            <p-menu #bell [popup]="true" [model]="list_Warn" appendTo="body" visible="'false'" [style]="{'width': 'auto','font-family':'Bai
+            <p-menu #bell [popup]="true" [model]="list_Warn" required appendTo="body" visible="'false'" [style]="{'width': 'auto','font-family':'Bai
                 Jamjuree, sans-serif','color':'black'}"></p-menu>
 
             <p-button-icon pButton pRipple class="p-button-text border-radius mt-0 style-font" type="button"
@@ -27,7 +27,7 @@
                 <span class="backgroundColor-icons" style="margin-right: 10px;">
                     <i class="pi pi-fw pi-user"></i> </span>
             </p-button-icon>
-            <p-menu class="m-0 p-0" #admin [popup]="true" [model]="list_Users" appendTo="body" [style]="{'font-family':'Bai Jamjuree,
+            <p-menu class="m-0 p-0" #admin [popup]="true" [model]="list_Users" required appendTo="body" [style]="{'font-family':'Bai Jamjuree,
                 sans-serif','color':'black'}">
             </p-menu>
         </div>

@@ -22,7 +22,6 @@ import {ChartModule} from 'primeng/chart';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeListComponent } from './home-list/home-list.component';
-import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [HomeListComponent],
