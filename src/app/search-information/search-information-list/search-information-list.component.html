@@ -1,4 +1,4 @@
-<div class="card p-2 mr-2">
+<div class="card p-2">
     <div class="d-flex justify-content-start align-items-center mb-2" [ngStyle]="{backgroundColor:'var(--blue-500)'}">
         <i class="pi pi-search ml-2" style="color: white; font-size:18px"></i>
         <h5 class="p-2 m-0  style-font" style="color: white"> C10 : หน้าค้นหาข้อมูล </h5>
@@ -6,7 +6,7 @@
 
     <div class="grid">
         <div class="col-3 d-flex justify-content-end align-items-center">
-            <label for="time" class="col-fixed" style="width: auto">เวลา</label>
+            <label for="time" class="col-fixed style-font" [style]="{'height': '38px'}">เวลา</label>
         </div>
         <div class="col-9 d-flex justify-content-start align-items-center">
             <p-calendar class="mr-3" [(ngModel)]="s_Time" [showIcon]="true" inputId="time" [timeOnly]="true"
@@ -15,22 +15,22 @@
             </p-calendar>
 
             <p-calendar [(ngModel)]="e_Time" [showIcon]="true" inputId="time" [timeOnly]="true"
-                placeholder="เวลาสิ้นสุด" [minDate]="s_Time" [readonlyInput]="true" inputStyleClass="text-center"
-                [style]="{'width': '250px','height': '38px'}">
+                placeholder="เวลาสิ้นสุด" [minDate]="s_Time" [readonlyInput]="true"
+                inputStyleClass="text-center .style-form" [style]="{'width': '250px','height': '38px'}">
             </p-calendar>
         </div>
     </div>
     <div class="grid">
         <div class="col-3 d-flex justify-content-end align-items-center">
-            <label class="col-fixed" style="width: auto">วันที่</label>
+            <label class="col-fixed style-font" [style]="{'height': '38px'}" for="date">วันที่</label>
         </div>
         <div class="col-9 d-flex justify-content-start align-items-center">
-            <p-calendar class="mr-3" [(ngModel)]="s_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
-                placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true" inputStyleClass="text-center"
-                [style]="{'width': '250px','height': '38px'}">
+            <p-calendar class="mr-3" [(ngModel)]="s_Date" inputId="date" [showIcon]="true" inputId="icon"
+                dateFormat="dd/mm/yy" placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true"
+                inputStyleClass="text-center" [style]="{'width': '250px','height': '38px'}">
             </p-calendar>
 
-            <p-calendar [(ngModel)]="e_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
+            <p-calendar [(ngModel)]="e_Date" inputId="date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
                 placeholder="วันที่สิ้นสุด" [minDate]="s_Date" [readonlyInput]="true" inputStyleClass="text-center"
                 [style]="{'width': '250px','height': '38px'}">
             </p-calendar>
@@ -39,17 +39,17 @@
 
     <div class="grid">
         <div class="col-3 d-flex justify-content-end align-items-center">
-            <label class="col-fixed" for="selset_Sem">อุณหภูมิ</label>
+            <label class="col-fixed style-font" for="selset_Sem" [style]="{'height': '38px'}">อุณหภูมิ</label>
         </div>
         <div class="col-9 d-flex justify-content-start align-items-center">
             <p-inputNumber class="mr-3" [(ngModel)]="start_Semperature" inputId="selset_Sem" mode="decimal"
                 [showButtons]="true" placeholder="อุณหภูมิเริ่มต้น" [minFractionDigits]="1" [maxFractionDigits]="5"
-                [min]="0" [max]="100" [step]="0.5" inputStyleClass="text-center"
+                [min]="0" [max]="100" [step]="0.5" inputStyleClass="text-center style-font"
                 [style]="{'width': '250px','height': '38px'}">
             </p-inputNumber>
 
             <p-inputNumber [(ngModel)]="end_Semperature" mode="decimal" [showButtons]="true" inputId="selset_Sem"
-                mode="decimal" [min]="0" placeholder="อุณหภูมิสิ้นสุด" [max]="100" inputStyleClass="text-center"
+                mode="decimal" [min]="0" placeholder="อุณหภูมิสิ้นสุด" [max]="100" inputStyleClass="text-center style-font"
                 [minFractionDigits]="1" [maxFractionDigits]="5" [min]="0" [max]="100" [step]="0.5"
                 [style]="{'width': '250px','height': '38px'}">
             </p-inputNumber>
@@ -58,11 +58,11 @@
 
     <div class="grid">
         <div class="col-3 d-flex justify-content-end align-items-start">
-            <label class="col-fixed">รูปแบบการใส่หน้ากาก</label>
+            <label class="col-fixed style-button" for="maskPattern" [style]="{'height': '38px'}">รูปแบบการใส่หน้ากาก</label>
         </div>
         <div class="col-9 pr-3 d-flex flex-wrap justify-content-start align-items-center">
-            <p-dropdown class="text-center" [(ngModel)]="value_Pattern" placeholder="ทั้งหมด" [options]="mask_Pattern"
-            [style]="{'width': '250px','height': '38px'}"></p-dropdown>
+            <p-dropdown class="text-center" [(ngModel)]="value_Pattern" placeholder="ทั้งหมด" inputId="maskPattern"
+                [options]="mask_Pattern" [style]="{'width': '250px','height': '38px'}"></p-dropdown>
         </div>
 
         <!-- <div class="col-6 pr-3 d-flex flex-wrap justify-content-start align-items-center">
@@ -96,19 +96,20 @@
     </div>
     <div class="grid mt-1">
         <div class="col-3"></div>
-        <div class="col-6 pr-3 d-flex flex-wrap justify-content-start align-items-center">
-            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger mr-3"
-                (click)="onClear()" label="ล้าง" [style]="{'width': '250px','height': '38px'}">
+        <div class="col-9 pr-3 d-flex flex-wrap justify-content-start align-items-center">
+            <button pButton pRipple type="button" icon="pi pi-trash"
+                class="p-button-rounded p-button-danger style-button mr-3" (click)="onClear()" label="ล้าง"
+                [style]="{'width': '250px','height': '38px'}">
             </button>
-            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded" (click)="onSearch()"
-                label="ค้นหา" [style]="{'width': '250px','height': '38px'}">
+            <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded style-button"
+                (click)="onSearch()" label="ค้นหา" [style]="{'width': '250px','height': '38px'}">
             </button>
         </div>
     </div>
     <br>
 
     <p-table class="d-inline" [value]="data_display" [resizableColumns]="true" styleClass="p-datatable-gridlines"
-        [rows]="6" [paginator]="true" [pageLinks]="4" selectionMode="single" sortMode="single">
+        [rows]="6" [paginator]="true" [pageLinks]="3" selectionMode="single" sortMode="single">
         <ng-template pTemplate="header">
             <tr>
                 <th class="p-1 style-font" style="width: 15%; text-align:
