@@ -18,6 +18,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {DropdownModule} from 'primeng/dropdown';
 import {ButtonModule} from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import {StyleClassModule} from 'primeng/styleclass';
 
 @NgModule({
   declarations: [SearchInformationListComponent],
@@ -36,7 +37,8 @@ import { TableModule } from 'primeng/table';
     RadioButtonModule,
     DropdownModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    StyleClassModule
   ]
 })
 export class SearchInformationModule { }
