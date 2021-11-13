@@ -40,8 +40,24 @@ img {
     font-size: 16px;
 }
 
-.style-button{
+.style-button {
     color: white;
-    font-family: 'Bai Jamjuree', sans-serif;
+    font-family: "Bai Jamjuree", sans-serif;
     font-size: 16px;
+    height: 32px;
 }
+
+// :host::ng-deep .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item,
+// body .ui-dropdown-panel .ui-dropdown-items .ui-dropdown-item-group {
+//     background: lightgreen;
+// }
+
+:host ::ng-deep .p-calendar-control {
+    font-size: 10px !important;
+    font-family: "Bai Jamjuree", sans-serif !important;
+}
+
+// :host ::ng-deep .p-calendar.calendar-control input {
+//     border: 1px solid red;
+//     background: #eeeeee;
+//   }

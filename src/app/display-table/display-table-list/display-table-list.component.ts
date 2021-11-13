@@ -9,7 +9,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class DisplayTableListComponent implements OnInit {
 
-  cols: any[];
+  data: any[];
 
   // constructor(private carService: CarService) {}
   constructor() {
@@ -19,7 +19,7 @@ export class DisplayTableListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cols = [
+    this.data = [
       { A: "A1", B: "B1" },
       { A: "A2", B: "B2" },
       { A: "A3", B: "B3" },

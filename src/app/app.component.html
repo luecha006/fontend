@@ -18,8 +18,9 @@
             </button>
 
             <p-menu #bell class="style-font" [popup]="true" [model]="list_Warn" required appendTo="body"
-                visible="'false'" [style]="{'width': 'auto','font-family':'Bai
-                Jamjuree, sans-serif','color':'black' ,'font-size': '16px'}"></p-menu>
+                visible="'false'"
+                [style]="{'width': 'auto','font-family':'BaiJamjuree, sans-serif','color':'black' ,'font-size': '16px'}">
+            </p-menu>
 
             <p-button-icon pButton pRipple class="p-button-text border-radius mt-0 style-font" type="button"
                 label="{{admin_name}}" label="Log in" icon="pi pi-fw pi-angle-down" (click)="admin.toggle($event)"

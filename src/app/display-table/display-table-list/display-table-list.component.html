@@ -1,16 +1,12 @@
 <div class="card p-2">
-    <div class="d-flex justify-content-start align-items-center"
-        [ngStyle]="{backgroundColor:'var(--blue-500)'}">
+    <div class="d-flex justify-content-start align-items-center" [ngStyle]="{backgroundColor:'var(--blue-500)'}">
         <i class="pi pi-table ml-2" style="color: white; font-size:17px"></i>
         <h5 class="p-2 m-0 " style="color: white"> C10 :
             หน้าตารางแสดงผล</h5>
     </div>
 
-    <p-table class="d-inline" [value]="cols"
-        [resizableColumns]="true"
-        styleClass="p-datatable-gridlines" [rows]="12" [paginator]="true"
-        [pageLinks]="3" selectionMode="single"
-        sortMode="single">
+    <p-table class="d-inline" [value]="data" [resizableColumns]="true" styleClass="p-datatable-gridlines" [rows]="12"
+        [paginator]="true" [pageLinks]="3" selectionMode="single" sortMode="single">
         <ng-template pTemplate="header">
             <tr>
                 <th class="p-1 style-font" style="width: 15%; text-align:

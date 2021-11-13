@@ -19,6 +19,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {PasswordModule} from 'primeng/password';
 import {DropdownModule} from 'primeng/dropdown';
 import {ChartModule} from 'primeng/chart';
+import { TableModule } from 'primeng/table';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeListComponent } from './home-list/home-list.component';
@@ -42,7 +43,8 @@ import { HomeListComponent } from './home-list/home-list.component';
     CheckboxModule,
     PasswordModule,
     DropdownModule,
-    ChartModule
+    ChartModule,
+    TableModule
   ],
   bootstrap: [HomeListComponent]
   // ,providers:[ConfirmationService, MessageService]

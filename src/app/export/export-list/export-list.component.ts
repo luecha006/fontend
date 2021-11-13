@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExportListComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    // this.data = ;
+
+  }
 
   ngOnInit(): void {
   }

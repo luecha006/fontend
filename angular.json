@@ -35,7 +35,7 @@
                             "node_modules/quill/dist/quill.snow.css",
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "node_modules/primeng/resources/primeng.css",
-                            "../node_modules/chart.js/dist/Chart.js"
+                            "node_modules/chart.js/dist/Chart.js"
                         ],
                         "scripts": []
                     },
@@ -106,7 +106,8 @@
                             "node_modules/primeicons/primeicons.css",
                             "node_modules/quill/dist/quill.snow.css",
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
-                            "node_modules/primeng/resources/primeng.css"
+                            "node_modules/primeng/resources/primeng.css",
+                            "node_modules/chart.js/dist/Chart.js"
                         ],
                         "scripts": []
                     }

@@ -17,7 +17,12 @@ export class HomeListComponent implements OnInit {
 
   s_Date: Date;
   e_Date: Date;
+
   data: any;
+  data_base: any;
+  data_lable: any;
+  basicData: any;
+  basicOptions: any;
   constructor() {
     this.item_Pattern = [
       { label: "แสดงเป็นวัน", value: "0" },
@@ -30,23 +35,41 @@ export class HomeListComponent implements OnInit {
     const currentDate = new Date(); //default date
     this.s_Date = currentDate;
     this.e_Date = currentDate;
+    this.data = [35.6, 36.5, 34.8, 38.2, 36.5, 37, 37];
+    this.data_lable = ['05.30', '06.00', '06.02', '07.00', '08.00', '08.30', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00', '18.00', '17.00', '19.00', '20.00'];
+    this.basicData = {
+      labels: this.data_lable,
+      datasets: [
+        {
+          label: 'สถิติการสแกน',
+          data: this.data,
+          fill: false,
+          borderColor: '#42A5F5',
+          tension: .2
+        }
+      ]
+    };
   }
 
   ngOnInit() {
-    // this.data = {
-    //   labels: ["January", "February", "March", "April", "May", "June", "July"],
-    //   datasets: [
-    //     {
-    //       label: "First Dataset",
-    //       data: [65, 59, 80, 81, 56, 55, 40],
-    //     },
-    //     {
-    //       label: "Second Dataset",
-    //       data: [28, 48, 40, 19, 86, 27, 90],
-    //     },
-    //   ],
-    // };
+    console.log('data :', this.data);
+    this.data_base = [
+      { A: "A1", B: "B1" },
+      { A: "A2", B: "B2" },
+      { A: "A3", B: "B3" },
+      { A: "A4", B: "B4" },
+      { A: "A5", B: "B1" },
+      { A: "A6", B: "B2" },
+      { A: "A7", B: "B3" },
+      { A: "A8", B: "B4" },
+      { A: "A9", B: "B1" },
+      { A: "A10", B: "B2" },
+      { A: "A11", B: "B3" },
+      { A: "A12", B: "B4" },
+      { A: "A13", B: "B1" },
+      { A: "A14", B: "B2" }
+    ];
   }
 
-  onConfirm(): void {}
+  onConfirm(): void { }
 }
