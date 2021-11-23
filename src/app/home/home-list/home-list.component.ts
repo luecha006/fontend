@@ -17,12 +17,26 @@ export class HomeListComponent implements OnInit {
 
   s_Date: Date;
   e_Date: Date;
+  s_Time: Date;
+  e_Time: Date;
+  s_Month: Date;
+  e_Month: Date;
+  data_Tabel: any;
+  chartLine: any;
+  chartLineData: any;
+  chartLineLable: any;
+  chartLineOptions: any;
 
-  data: any;
-  data_base: any;
-  data_lable: any;
-  basicData: any;
-  basicOptions: any;
+  chartPie: any;
+  chartPieOptions: any;
+  chartPieData: any;
+  chartPieLable: any;
+
+  BarChart: any;
+  BarChartOptions: any;
+  BarChartData: any;
+  BarChartLable: any;
+
   constructor() {
     this.item_Pattern = [
       { label: "แสดงเป็นวัน", value: "0" },
@@ -35,25 +49,14 @@ export class HomeListComponent implements OnInit {
     const currentDate = new Date(); //default date
     this.s_Date = currentDate;
     this.e_Date = currentDate;
-    this.data = [35.6, 36.5, 34.8, 38.2, 36.5, 37, 37];
-    this.data_lable = ['05.30', '06.00', '06.02', '07.00', '08.00', '08.30', '09.00', '10.00', '11.00', '12.00', '13.00', '14.00', '15.00', '16.00', '17.00', '18.00', '17.00', '19.00', '20.00'];
-    this.basicData = {
-      labels: this.data_lable,
-      datasets: [
-        {
-          label: 'สถิติการสแกน',
-          data: this.data,
-          fill: false,
-          borderColor: '#42A5F5',
-          tension: .2
-        }
-      ]
-    };
   }
 
   ngOnInit() {
-    console.log('data :', this.data);
-    this.data_base = [
+    this.chartLineData = [35.6, 36.5, 34.8, 38.2, 36.5, 37, 37];
+    this.chartLineLable = ['05.30', '06.00', '06.02', '07.00', '08.00', '08.30', '09.00', '10.00', '11.00',
+      '12.00', '13.00', '14.00', '15.00', '16.00', '17.00', '18.00', '17.00', '19.00', '20.00'];
+    // console.log('data :', this.data);
+    this.data_Tabel = [
       { A: "A1", B: "B1" },
       { A: "A2", B: "B2" },
       { A: "A3", B: "B3" },
@@ -69,6 +72,60 @@ export class HomeListComponent implements OnInit {
       { A: "A13", B: "B1" },
       { A: "A14", B: "B2" }
     ];
+
+    this.chartLine = {
+      labels: this.chartLineLable,
+      datasets: [
+        {
+          label: 'สถิติการสแกน',
+          data: this.chartLineData,
+          fill: false,
+          borderColor: '#42A5F5',
+          tension: .2,
+          yAxisID: 'y'
+        }
+      ],
+    };
+
+    this.chartPie = {
+      labels: ['อุณหภูมิเกินกำหนด', 'ไม่ใส่หน้าหน้ากาก', 'ใส่หน้ากากถูกวิธี'],
+      datasets: [
+        {
+          data: [15, 50, 350],
+          backgroundColor: [
+            "#e70000",
+            "#42A5F5",
+            "#66BB6A"
+          ],
+          hoverBackgroundColor: [
+            "#ff0000",
+            "#64B5F6",
+            "#81C784"
+          ]
+        }
+      ]
+    };
+
+    this.BarChart = {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label: 'ใส่หน้ากากอนามัยถูกวิธี',
+          backgroundColor: '#42A5F5',
+          data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+          label: 'ใส่หน้ากากอนามัยผิดวิธี',
+          backgroundColor: '#FFA726',
+          data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+          label: 'อุณหภูมิสูงเกินกำหนด',
+          backgroundColor: '#ff0000',
+          data: [28, 48, 40, 19, 86, 27, 90]
+        }
+      ]
+    };
   }
 
   onConfirm(): void { }

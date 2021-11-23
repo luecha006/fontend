@@ -1,7 +1,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 // @import "~font-awesome/css/font-awesome.min.css";
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300&display=swap");
 $c10: #2399e5;
 $c10-gray: #e0e0e0;
 h1,
@@ -11,7 +11,7 @@ h4,
 h5,
 h6 {
     color: black;
-    font-family: 'Bai Jamjuree', sans-serif;
+    font-family: "Bai Jamjuree", sans-serif;
 }
 
 p {
@@ -77,9 +77,15 @@ a:hover {
 .style-font {
     color: black;
     // font-family: "IBM Plex Sans Thai", sans-serif;
-    font-family: 'Bai Jamjuree', sans-serif;
+    font-family: "Bai Jamjuree", sans-serif;
 }
 
-// .backgroundColor-Button{
-//     background-color: var(--blue-400);
-// }
+.container ::ng-deep p-calendar .ui-datepicker table td {
+    padding: 1px !important;
+}
+.container ::ng-deep p-calendar .ui-datepicker .ui-timepicker {
+    padding: 2px 0 0 0 !important;
+}
+.container ::ng-deep p-calendar .ui-datepicker {
+    padding: 0.857em 0.857em 0 0.857em !important;
+}

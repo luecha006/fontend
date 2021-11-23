@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./export-list.component.scss']
 })
 export class ExportListComponent implements OnInit {
-
+  value: Date;
+  label :string = 'heoolr';
   constructor() {
     // this.data = ;
 
