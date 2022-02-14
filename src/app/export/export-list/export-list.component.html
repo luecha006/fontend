@@ -5,10 +5,47 @@
     </div>
 
     <div class="container">
-        <span class="ui-float-label">
-            <!-- <p-calendar [showTime]="true" hourFormat="12" [(ngModel)]="value" inputId="text" id="text" [showIcon]="true"
-                [inline]="true"></p-calendar>
-            <label id="inline-lable" for="text" class="ml-2">{{label}}</label> -->
-        </span>
+        <form [formGroup]="duration">
+            <div class="mt-3">
+                <div class="grid">
+                    <div class="col-5 d-flex justify-content-end align-items-center">
+                        <label class="d-flex align-items-center" for="date">จากเดือน</label>
+                    </div>
+                    <div class="col-7 d-flex justify-content-start align-items-center">
+                        <p-calendar class="mr-3" formControlName="s_Month" view="month" dateFormat="mm/yy"
+                            [yearNavigator]="true" [showIcon]="true" placeholder="เดือนเริ่มต้น" [maxDate]="duration.value.e_Month"
+                            [readonlyInput]="true" [readonlyInput]="true" inputId="month" yearRange="2000:2030">
+                        </p-calendar>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <div class="grid">
+                        <div class="col-5 d-flex justify-content-end align-items-center">
+                            <label class="d-flex align-items-center" for="date">ไปยังเดือน</label>
+                        </div>
+                        <div class="col-7 d-flex justify-content-start align-items-center">
+                            <p-calendar formControlName="e_Month" view="month" dateFormat="mm/yy" [yearNavigator]="true"
+                                [showIcon]="true" placeholder="เดือนสิ้นสุด" [minDate]="duration.value.s_Month" [readonlyInput]="true"
+                                [readonlyInput]="true" inputId="month" yearRange="2000:2030"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <div class="grid">
+                        <div class="col-5"></div>
+                        <div class="col-7 d-flex flex-wrap justify-content-start align-items-center">
+                            <button pButton pRipple type="button" icon="pi pi-file-pdf"
+                                class="p-button-rounded style-button" (click)="onDownload()" label="download pdf"
+                                [style]="{'width': '240px','height': '32px'}">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+
     </div>
 </div>

@@ -76,4 +76,8 @@ export class SearchInformationListComponent implements OnInit {
 
   }
 
+  onDownload() : void {
+    
+  }
+
 }
