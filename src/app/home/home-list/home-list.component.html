@@ -105,7 +105,7 @@
                     [ngStyle]="{backgroundColor:'var(--blue-500)'}">
                     <h6 class="p-2 m-0 " style="color: white"> อุณหภูมิสูงเกินกว่ากำหนด </h6>
                 </div>
-                <p-table class="d-inline" [value]="data_Tabel" [paginator]="true" selectionMode="single"
+                <p-table class="d-inline" [value]="highTemperature" [paginator]="true" selectionMode="single"
                     styleClass="p-datatable-gridlines p-datatable-sm" [rows]="11" [pageLinks]="1">
                     <ng-template pTemplate="header">
                         <tr>
@@ -117,8 +117,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-col>
                         <tr>
-                            <td class="p-0 style-font" style="text-align: center; ">{{col.A}}</td>
-                            <td class="p-0 style-font" style="text-align: center;">{{col.B}}</td>
+                            <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start;">{{col.time}}</td>
+                            <td class="p-0 style-font" style="text-align: center;">{{col.temperature}}</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -137,7 +137,7 @@
                     [ngStyle]="{backgroundColor:'var(--blue-500)'}">
                     <h6 class="p-2 m-0 " style="color: white"> อุณหภูมิสูงเกินกว่ากำหนด </h6>
                 </div>
-                <p-table class="d-inline" [value]="data_Tabel" [paginator]="true" selectionMode="single"
+                <p-table class="d-inline" [value]="highTemperature" [paginator]="true" selectionMode="single"
                     styleClass="p-datatable-gridlines p-datatable-sm" [rows]="8" [pageLinks]="1">
                     <ng-template pTemplate="header">
                         <tr>
@@ -149,8 +149,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-col>
                         <tr>
-                            <td class="p-0 style-font" style="text-align: center; ">{{col.A}}</td>
-                            <td class="p-0 style-font" style="text-align: center;">{{col.B}}</td>
+                            <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
+                            <td class="p-0 style-font" style="text-align: center;">{{col.temperature}}</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -169,7 +169,7 @@
                     [ngStyle]="{backgroundColor:'var(--blue-500)'}">
                     <h6 class="p-2 m-0 " style="color: white"> อุณหภูมิสูงเกินกว่ากำหนด </h6>
                 </div>
-                <p-table class="d-inline" [value]="data_Tabel" [paginator]="true" selectionMode="single"
+                <p-table class="d-inline" [value]="highTemperature" [paginator]="true" selectionMode="single"
                     styleClass="p-datatable-gridlines p-datatable-sm" [rows]="8" [pageLinks]="1">
                     <ng-template pTemplate="header">
                         <tr>
@@ -181,8 +181,8 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-col>
                         <tr>
-                            <td class="p-0 style-font" style="text-align: center; ">{{col.A}}</td>
-                            <td class="p-0 style-font" style="text-align: center;">{{col.B}}</td>
+                            <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
+                            <td class="p-0 style-font" style="text-align: center;">{{col.temperature}}</td>
                         </tr>
                     </ng-template>
                 </p-table>
@@ -202,20 +202,20 @@
                     [ngStyle]="{backgroundColor:'var(--blue-500)'}">
                     <h6 class="p-2 m-0 " style="color: white"> ใส่หน้ากากผิดวิธี </h6>
                 </div>
-                <p-table class="d-inline" [value]="data_Tabel" [paginator]="true" selectionMode="single"
+                <p-table class="d-inline" [value]="maskMisapplication" [paginator]="true" selectionMode="single"
                     styleClass="p-datatable-gridlines p-datatable-sm" [rows]="8" [pageLinks]="1">
                     <ng-template pTemplate="header">
                         <tr>
                             <th class="p-1 style-font" style="width: 50%; text-align:
                     center;">เวลา</th>
                             <th class="p-1 style-font" style="width: 50%; text-align:
-                    center;">อุณหภูมิ</th>
+                    center;">รูปแบบ</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-col>
                         <tr>
-                            <td class="p-0 style-font" style="text-align: center; ">{{col.A}}</td>
-                            <td class="p-0 style-font" style="text-align: center;">{{col.B}}</td>
+                            <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
+                            <td class="p-0 style-font" style="text-align: center;">{{col.maskpattern}}</td>
                         </tr>
                     </ng-template>
                 </p-table>

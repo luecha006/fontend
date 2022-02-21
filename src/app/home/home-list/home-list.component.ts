@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { HomeService } from './home.service';
+import { Component, OnInit, Inject } from "@angular/core";
 import { SelectItem, SelectItemGroup } from "primeng/api";
 import { FormBuilder, FormGroup } from "@angular/forms";
-
 // import { Chart } from 'chart.js';
 
 @Component({
@@ -21,6 +21,7 @@ export class HomeListComponent implements OnInit {
   e_Time: Date;
   s_Month: Date;
   e_Month: Date;
+
   data_Tabel: any;
   chartLine: any;
   chartLineData: any;
@@ -37,7 +38,14 @@ export class HomeListComponent implements OnInit {
   BarChartData: any;
   BarChartLable: any;
 
-  constructor() {
+  highTemperature: any = [];
+  maskMisapplication: any = [];
+
+
+
+  constructor(@Inject(FormBuilder) fb: FormBuilder,
+    private homeService: HomeService) {
+
     this.item_Pattern = [
       { label: "แสดงเป็นวัน", value: "0" },
       { label: "แสดงเป็นสัปดาห์", value: "1" },
@@ -49,28 +57,48 @@ export class HomeListComponent implements OnInit {
     const currentDate = new Date(); //default date
     this.s_Date = currentDate;
     this.e_Date = currentDate;
+
+    this.homeService.fetchAllMaskPattern().subscribe((response) => {
+      // console.log(response);
+      for (var i in response) {
+        if ((response[i].maskpattern === "out") || (response[i].maskpattern === "m")) {
+          console.log(response[i].maskpattern);
+          this.maskMisapplication.push(response[i]);
+        }
+        
+        if(response[i].temperature > 37.00){
+          this.highTemperature.push(response[i]);
+        }
+      }
+      // console.log('maskMisapplication ', this.maskMisapplication);
+      // console.log('highTemperature ', this.highTemperature);
+
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   ngOnInit() {
+    console.log('home componenr');
     this.chartLineData = [35.6, 36.5, 34.8, 38.2, 36.5, 37, 37];
     this.chartLineLable = ['05.30', '06.00', '06.02', '07.00', '08.00', '08.30', '09.00', '10.00', '11.00',
       '12.00', '13.00', '14.00', '15.00', '16.00', '17.00', '18.00', '17.00', '19.00', '20.00'];
     // console.log('data :', this.data);
     this.data_Tabel = [
-      { A: "A1", B: "B1" },
-      { A: "A2", B: "B2" },
-      { A: "A3", B: "B3" },
-      { A: "A4", B: "B4" },
-      { A: "A5", B: "B1" },
-      { A: "A6", B: "B2" },
-      { A: "A7", B: "B3" },
-      { A: "A8", B: "B4" },
-      { A: "A9", B: "B1" },
-      { A: "A10", B: "B2" },
-      { A: "A11", B: "B3" },
-      { A: "A12", B: "B4" },
-      { A: "A13", B: "B1" },
-      { A: "A14", B: "B2" }
+      // { A: "A1", B: "B1" },
+      // { A: "A2", B: "B2" },
+      // { A: "A3", B: "B3" },
+      // { A: "A4", B: "B4" },
+      // { A: "A5", B: "B1" },
+      // { A: "A6", B: "B2" },
+      // { A: "A7", B: "B3" },
+      // { A: "A8", B: "B4" },
+      // { A: "A9", B: "B1" },
+      // { A: "A10", B: "B2" },
+      // { A: "A11", B: "B3" },
+      // { A: "A12", B: "B4" },
+      // { A: "A13", B: "B1" },
+      // { A: "A14", B: "B2" }
     ];
 
     this.chartLine = {
@@ -127,6 +155,8 @@ export class HomeListComponent implements OnInit {
       ]
     };
   }
+
+
 
   onConfirm(): void { }
 }

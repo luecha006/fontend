@@ -11,11 +11,14 @@
 
             <div class="spacer"></div>
 
-            <button pButton pRipple type="button" icon="pi pi-bell" class="p-button-rounded mr-3" badge="8"
-                badgeClass="p-badge-danger" style="display: flexbox; float:
+            <button pButton pRipple type="button" class="p-button-rounded mr-3 p-0" style="display: flexbox; float:
                 right; border: none; height: 30px; width: 30px;" (click)="bell.toggle($event)" [ngStyle]="{color:'var(--blue-500)'
-                ,backgroundColor:'var(--gray-200)'}">
+                ,backgroundColor:'var(--gray-200)'}"> <i class="pi pi-bell ml-1 " pBadge value="2"
+                    severity="danger"></i>
             </button>
+
+            <!-- <p-button styleClass="p-mr-2"><i class="pi pi-bell p-mr-4 " pBadge style="font-size: 15px"
+                    value="2"></i> </p-button> icon="pi pi-bell" -->
 
             <p-menu #bell class="style-font" [popup]="true" [model]="list_Warn" required appendTo="body"
                 visible="'false'"
@@ -47,44 +50,56 @@
 </div>
 
 <!-- ------------------------------------------- เพิ่มสมาชิก ----------------------------------------------- -->
-<p-dialog header="" [(visible)]="isAddUser_Form" [modal]="true" [style]="{width: '25%','height':'auto'}"
+<p-dialog header="" [(visible)]="isRegisterAdmin_Form" [modal]="true" [style]="{width: '25%','height':'auto'}"
     [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
     <div class="mt-0 mb-5">
-        <h5 class="mb-4 p-2" style="text-align: center;"> เพิ่มสมาชิก </h5>
-        <div class="grid">
-            <div class="col">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                    <input class="style-font" type="text" pInputText [(ngModel)]="add_Username" placeholder="Username"
-                        [style]="{'width': '100%', 'height': '38px'}">
+        <form [formGroup]="formRegister" (ngSubmit)="onRegisterAdmin()">
+            <h5 class="mb-4 p-2" style="text-align: center;"> เพิ่มสมาชิก </h5>
+            <div class="grid">
+                <div class="col">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                        <input class="style-font form-control" type="text" pInputText formControlName="username"
+                            placeholder="Username" [style]="{'width': '100%', 'height': '38px'}">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="grid">
-            <div class="col">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-                    <input class="style-font" type="password" pPassword [(ngModel)]="add_Password"
-                        placeholder="Password" [style]="{'width': '100%', 'height': '38px'}" />
+            <div class="grid">
+                <div class="col">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                        <input class="style-font form-control" type="password" pPassword formControlName="password"
+                            placeholder="Password" [style]="{'width': '100%', 'height': '38px'}" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <small class="style-font" id="username2-help" class="p-invalid"
-            style="color: red;">{{message_error_AddUser}}</small>
-        <div class="grid row mt-3">
-            <div class="col p-1">
-                <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-danger style-button" (click)="onCancel_AddUser()" label="ยกเลิก"
-                    [style]="{'width': '100%', 'height':'38px'}">
-                </button>
+            <div class="grid">
+                <div class="col">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                        <input class="style-font form-control" type="password" pPassword
+                            formControlName="confirmPassword" placeholder="Confirm password"
+                            [style]="{'width': '100%', 'height': '38px'}" />
+                    </div>
+                </div>
+            </div>
+            <small class="style-font" id="username2-help" class="p-invalid"
+                style="color: red;">{{message_error_Register}}</small>
 
+            <div class="grid row mt-3">
+                <div class="col p-1">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                        class="p-button-rounded p-button-danger style-button" (click)="onCancel_RegisterAdmin()"
+                        label="ยกเลิก">
+                    </button>
+                </div>
+                <div class="col p-1">
+                    <button pButton pRipple type="submit" icon="pi pi-check" class="p-button-rounded style-button"
+                        label="ยืนยัน">
+                    </button>
+                </div>
             </div>
-            <div class="col p-1">
-                <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded style-button"
-                    (click)="onCleck_AddUser()" label="ยืนยัน" [style]="{'width': '100%', 'height':'38px'}">
-                </button>
-            </div>
-        </div>
+        </form>
     </div>
 </p-dialog>
 
@@ -92,49 +107,48 @@
 <p-dialog header="" [(visible)]="isLogout_form" [modal]="true" [style]="{width: '25%','height':'auto'}"
     [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
     <div class="mt-0 mb-5">
-        <h5 class="mb-5 p-2" style="text-align: center;"> เข้าสู่ระบบ </h5>
-        <div class="grid">
-            <div class="col">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                    <input class="style-font" type="text" pInputText [(ngModel)]="login_Username" placeholder="Username"
-                        [style]="{'width': '100%', 'height': '38px'}">
+        <form [formGroup]="formLogin" (ngSubmit)="onSubmit_Login()" novalidate>
+            <h5 class="mb-5 p-2" style="text-align: center;"> เข้าสู่ระบบ </h5>
+            <div class="grid">
+                <div class="col">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                        <input class="style-font form-control" type="text" pInputText formControlName="username"
+                            placeholder="Username" [style]="{'width': '100%', 'height': '38px'}">
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="grid">
-            <div class="col">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-                    <input class="style-font" type="password" pPassword [(ngModel)]="login_Password"
-                        placeholder="Password" [style]="{'width': '100%', 'height': '38px'}" />
-                    <!-- <input type="text" pInputText placeholder="Password"> -->
+            <div class="grid">
+                <div class="col">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                        <input class="style-font" type="password" pPassword formControlName="password"
+                            placeholder="Password" [style]="{'width': '100%', 'height': '38px'}" />
+                        <!-- <input type="text" pInputText placeholder="Password"> -->
+                    </div>
+                    <small class="style-font" id="username" class="p-invalid"
+                        style="color: red;">{{message_error_Login}}</small>
                 </div>
-                <small class="style-font" id="username2-help" class="p-invalid"
-                    style="color: red;">{{message_error_Login}}</small>
             </div>
-        </div>
-        <div class="d-flex p-field-checkbox">
-            <p-checkbox [(ngModel)]="remember_Me" [binary]="true" inputId="binary"></p-checkbox>
-            <label class="ml-1 style-font" for="binary">Remember me</label>
-        </div>
 
-        <div class="grid row mt-3">
-            <div class="col p-1">
-                <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-danger style-button" (click)="onCancel_Login()" label="ยกเลิก"
-                    [style]="{'width': '100%', 'height':'38px'}">
-                </button>
-
+            <div class="d-flex p-field-checkbox">
+                <p-checkbox formControlName="remember" [binary]="true" inputId="binary"></p-checkbox>
+                <label class="ml-1 style-font" for="binary">Remember me</label>
             </div>
-            <div class="col p-1">
-                <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded style-button"
-                    (click)="onClick_login()" label="ยืนยัน" [style]="{'width': '100%', 'height':'38px'}">
-                </button>
-            </div>
-        </div>
 
+            <div class="grid row mt-3">
+                <div class="col p-1">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                        class="p-button-rounded p-button-danger style-button" (click)="onCancel_Login()" label="ยกเลิก">
+                    </button>
+                </div>
+                <div class="col p-1">
+                    <button pButton pRipple type="submit" icon="pi pi-check" class="p-button-rounded style-button"
+                        label="ยืนยัน">
+                    </button>
+                </div>
+            </div>
+        </form>
     </div>
 </p-dialog>
 
@@ -142,41 +156,42 @@
 <p-dialog header="" [(visible)]="isChangPassWord_Form" [modal]="true" [style]="{width: '25%','height':'auto'}"
     [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
     <div class="mt-0 mb-5">
-        <h5 class="mb-5 p-2" style="text-align: center;"> เปลี่ยนรหัสผ่าน </h5>
-        <div class="grid">
-            <div class="col">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-                    <input class="style-font" type="password" pPassword [(ngModel)]="new_Password1"
-                        placeholder="Password" [style]="{'width': '100%', 'height': '38px'}" />
+        <form [formGroup]="formChanePassword" (ngSubmit)="onChangPassword()">
+            <h5 class="mb-5 p-2" style="text-align: center;"> เปลี่ยนรหัสผ่าน </h5>
+            <div class="grid">
+                <div class="col">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                        <input class="style-font" type="password" pPassword formControlName="password"
+                            placeholder="Password" [style]="{'width': '100%', 'height': '38px'}" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="grid">
-            <div class="col">
-                <div class="p-inputgroup">
-                    <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
-                    <input type="password" pPassword [(ngModel)]="new_Password2" placeholder="Confirm Password"
-                        [style]="{'width': '100%', 'height': '38px'}" />
+            <div class="grid">
+                <div class="col">
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"><i class="pi pi-key"></i></span>
+                        <input class="style-font" type="password" pPassword formControlName="confirmPassword"
+                            placeholder="Confirm Password" [style]="{'width': '100%', 'height': '38px'}" />
+                    </div>
                 </div>
             </div>
-        </div>
-        <small id="username2-help" class="p-invalid" style="color: red;">{{message_error_Changpassword}}</small>
+            <small id="username2-help" class="p-invalid" style="color: red;">{{message_error_Changpassword}}</small>
 
-        <div class="grid row mt-3">
-            <div class="col p-1">
-                <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-danger style-button" (click)="onCancel_ChangPassword()"
-                    label="ยกเลิก" [style]="{'width': '100%', 'height':'38px'}">
-                </button>
+            <div class="grid row mt-3">
+                <div class="col p-1">
+                    <button pButton pRipple type="button" icon="pi pi-times"
+                        class="p-button-rounded p-button-danger style-button" (click)="onCancel_ChangPassword()"
+                        label="ยกเลิก">
+                    </button>
+                </div>
+                <div class="col p-1">
+                    <button pButton pRipple type="submit" icon="pi pi-check" class="p-button-rounded style-button"
+                        label="ยืนยัน">
+                    </button>
+                </div>
             </div>
-            <div class="col p-1">
-                <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded style-button"
-                    (click)="onClick_ChangPassword()" label="ยืนยัน" [style]="{'width': '100%', 'height':'38px'}">
-                </button>
-            </div>
-        </div>
-
+        </form>
     </div>
 </p-dialog>
 
@@ -186,28 +201,56 @@
     <div class="mt-0 mb-5">
         <h5 class="mb-5 p-2" style="text-align: center;"> ตั้งค่าอุณหภูมิ </h5>
         <div class="grid d-flex flex-column">
-            <div class="col">
-                <p style="text-align: center;">{{ start_Temperature }}</p>
-            </div>
-            <div class="col">
-                <p-slider [(ngModel)]="start_Temperature" [min]="0" [max]="100" [step]="0.5"
-                    [style]="{'width': '100%'}"></p-slider>
-            </div>
+            <form [formGroup]="formTemperature">
+                <div class="col">
+                    <p-slider formControlName="temperature" [min]="0" [max]="100" [step]="0.5"
+                        [style]="{'width': '100%'}"></p-slider>
+                </div>
+            </form>
         </div>
 
         <div class="grid row mt-3">
-            <!-- <div class="col p-1">
-                <button pButton pRipple type="button" icon="pi pi-times"
-                    class="p-button-rounded p-button-danger style-font" (click)="onCancel_ChangPassword()"
-                    label="ยกเลิก" [style]="{'width' : '100%'}">
-                </button>
-            </div> -->
             <div class="col p-1">
                 <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded style-button"
-                    (click)="onCleck_SetTemPeraTure()" label="ยืนยัน" [style]="{'width': '100%', 'height':'38px'}">
+                    (click)="onSetTemPeraTure()" label="ยืนยัน">
                 </button>
             </div>
         </div>
 
+    </div>
+</p-dialog>
+
+<!-- ------------------------------------------- ลบแอดมิน ----------------------------------------------- -->
+
+<p-dialog header="" [(visible)]="isDelect_Form" [modal]="true" [style]="{width: '40%','height':'auto'}"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="true">
+    <div class="mt-0 mb-5">
+        <h5 class="mb-5 p-2" style="text-align: center;"> ลบผู้ดูแลระบบ </h5>
+        <div class="grid d-flex flex-column">
+
+            <p-table class="d-inline" [value]="listAdmin" [paginator]="true" selectionMode="single"
+                styleClass="p-datatable-gridlines p-datatable-sm" [rows]="5" [pageLinks]="2">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="p-1 style-font"
+                        style="width: 50%; text-align: center; background-color: #c7c7c7;">Username</th>
+                        <th class="p-1 style-font"
+                        style="width: 35%; text-align: center; background-color: #c7c7c7;">Type_admin</th>
+                        <th class="p-1 style-font"
+                        style="width: 15%; text-align: center; background-color: #c7c7c7;">Delect</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-col>
+                    <tr>
+                        <td class="p-0 style-font" style="text-align: center;">{{col.username}}</td>
+                        <td class="p-0 style-font" style="text-align: center;">{{col.type_admin}}</td>
+                        <td class="p-1 style-font" style="text-align: center;">
+                            <button pButton pRipple icon="pi pi-trash" class="p-0 m-0 p-button-danger p-button-sm" 
+                           [ngStyle]="{'border-radius': '2px'}" (click)="onSubmit_Delect(col)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </div>
 </p-dialog>

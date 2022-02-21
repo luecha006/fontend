@@ -12,8 +12,8 @@
                         <label class="d-flex align-items-center" for="date">จากเดือน</label>
                     </div>
                     <div class="col-7 d-flex justify-content-start align-items-center">
-                        <p-calendar class="mr-3" formControlName="s_Month" view="month" dateFormat="mm/yy"
-                            [yearNavigator]="true" [showIcon]="true" placeholder="เดือนเริ่มต้น" [maxDate]="duration.value.e_Month"
+                        <p-calendar class="mr-3" formControlName="s_Month"  view="month" dateFormat="mm/yy"
+                            [yearNavigator]="true" [showIcon]="true" placeholder="เลือกเดือน" [maxDate]="duration.value.e_Month"
                             [readonlyInput]="true" [readonlyInput]="true" inputId="month" yearRange="2000:2030">
                         </p-calendar>
                     </div>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-7 d-flex justify-content-start align-items-center">
                             <p-calendar formControlName="e_Month" view="month" dateFormat="mm/yy" [yearNavigator]="true"
-                                [showIcon]="true" placeholder="เดือนสิ้นสุด" [minDate]="duration.value.s_Month" [readonlyInput]="true"
+                                [showIcon]="true" placeholder="เลือกเดือน" [minDate]="duration.value.s_Month" [readonlyInput]="true"
                                 [readonlyInput]="true" inputId="month" yearRange="2000:2030"></p-calendar>
                         </div>
                     </div>

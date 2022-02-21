@@ -2,7 +2,7 @@ import  en  from '@angular/common/locales/en';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule  } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,6 +27,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import {PasswordModule} from 'primeng/password';
 import {SliderModule} from 'primeng/slider';
 import {DropdownModule} from 'primeng/dropdown';
+import {TableModule} from 'primeng/table';
 
 registerLocaleData(en);
 
@@ -60,7 +61,8 @@ registerLocaleData(en);
     CalendarModule,
     CheckboxModule,
     PasswordModule,
-    SliderModule
+    SliderModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
