@@ -86,6 +86,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.primengConfig.ripple = true;
     this.check_Login();
 
@@ -229,10 +230,10 @@ export class AppComponent implements OnInit {
         // console.log(response);
         this.updateListAdmin();
         this.isDelect_Form = true;
+        alert('ลบผู้ดูแล ' + event.username + ' เรียบร้อยแล้ว');
       }, (error) => {
         console.log(error);
       });
-      alert('ลบผู้ดูแล ' + event.username + ' เรียบร้อยแล้ว');
     }
   }
 
@@ -367,7 +368,14 @@ export class AppComponent implements OnInit {
   }
 
   onRegisterAdmin(): void {
+
+    const dateTime = new Date();
+    // console.log("time ",dateTime.toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok" }));
+    // console.log("date ",dateTime.toLocaleDateString("en-GB", { timeZone: "Asia/Bangkok" }));
+
     let dataRegister = {
+      date: dateTime.toLocaleDateString("en-GB", { timeZone: "Asia/Bangkok" }),
+      time: dateTime.toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok" }),
       username: this.formRegister.value.username,
       password: this.formRegister.value.password,
       type_admin: this.formRegister.value.type_admin

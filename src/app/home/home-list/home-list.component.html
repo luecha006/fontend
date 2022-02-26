@@ -3,103 +3,175 @@
         <i class="pi pi-home ml-2" style="color: white; font-size:18px"></i>
         <h5 class="p-2 m-0" style="color: white"> C10 : หน้าแรก</h5>
     </div>
+
+
     <!-- รูปแบบการแสดง เป็นรายวัน -->
     <div *ngIf="value_Pattern == 0" class="d-flex justify-content-between align-items-center mt-2">
         <span class="d-flex align-items-center">
             <label class="d-flex align-items-center mr-2">รูปแบบการแสดง</label>
             <p-dropdown class="text-center" [(ngModel)]="value_Pattern" styleClass="d-flex align-items-center"
-                placeholder="แสดงเป็นวัน" [options]="item_Pattern">
+                placeholder="แสดงเป็นวันปัจจุบัน" [options]="item_Pattern">
             </p-dropdown>
         </span>
-        <span class="d-flex align-items-center">
-            <label class="d-flex align-items-center mr-2">ช่วงเวลาที่แสดง</label>
-            <p-calendar class="mr-3 tyle-form" [(ngModel)]="s_Time" [showIcon]="true" inputId="time" [timeOnly]="true"
-                hourFormat="24" placeholder="เวลาเริ่มต้น" [maxDate]="e_Time" [readonlyInput]="true"
-                inputStyleClass="text-center">
-            </p-calendar>
-
-            <p-calendar [(ngModel)]="e_Time" [showIcon]="true" inputId="time" [timeOnly]="true"
-                placeholder="เวลาสิ้นสุด" [minDate]="s_Time" [readonlyInput]="true"
-                inputStyleClass="text-center style-form">
-            </p-calendar>
-            <!-- <p-calendar class=" mr-2" [(ngModel)]="s_Date" appendTo="body" [showIcon]="true" inputId="icon"
-                dateFormat="dd/mm/yy" placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true"
-                inputStyleClass="text-center">
-            </p-calendar>
-            <p-calendar [(ngModel)]="e_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
-                placeholder="วันที่สิ้นสุด" [minDate]="s_Date" [readonlyInput]="true"
-                inputStyleClass="text-center style-font">
-            </p-calendar> -->
-        </span>
-        <span class="d-flex align-items-center">
-            <button pButton pRipple type="button" icon="pi pi-check" class="d-flex align-items-center style-button"
-                (click)="onConfirm()" label="ยืนยัน">
-            </button>
-        </span>
+        <form [formGroup]="currentDayFormat_Form" (ngSubmit)="onSubmitCurrentDayFormat()"  class="d-flex justify-content-between align-items-center">
+            <span class="d-flex align-items-center">
+                <label class="d-flex align-items-center mr-2" for="time">ช่วงเวลาที่แสดง</label>
+    
+                <p-calendar class="mr-2 tyle-form" formControlName="s_time" [showIcon]="true" [showSeconds]="true"
+                    inputId="time" [timeOnly]="true" hourFormat="24" placeholder="เวลาเริ่มต้น"
+                    [maxDate]="currentDayFormat_Form.value.e_time"  inputStyleClass="text-center">
+                </p-calendar>
+                <p-calendar class="tyle-form" formControlName="e_time" [showIcon]="true" [showSeconds]="true"
+                    inputId="time" [timeOnly]="true" hourFormat="24" placeholder="เวลาสิ้นสุด" 
+                    [minDate]="currentDayFormat_Form.value.s_time" [readonlyInput]="true" inputStyleClass="text-center">
+                </p-calendar>
+            </span>
+    
+            <span class="d-flex align-items-center">
+                <button pButton pRipple type="submit" icon="pi pi-check" class="ml-2 d-flex align-items-center style-button"
+                    label="ยืนยัน">
+                </button>
+            </span>
+        </form>
     </div>
+
     <!-- รูปแบบการแสดง สัปดาห์ -->
     <div *ngIf="value_Pattern == 1" class="d-flex justify-content-between align-items-center mt-2">
         <span class="d-flex align-items-center">
-            <label class="d-flex align-items-center mr-2">รูปแบบการแสดง</label>
-            <p-dropdown class="text-center" [(ngModel)]="value_Pattern" styleClass="d-flex align-items-center"
+            <label class="d-flex align-items-center mr-2" for="weekly">รูปแบบการแสดง</label>
+            <p-dropdown class="text-center" inputId="weekly" [(ngModel)]="value_Pattern" styleClass="d-flex align-items-center"
                 placeholder="แสดงเป็นวัน" [options]="item_Pattern">
             </p-dropdown>
         </span>
 
-        <span class="d-flex align-items-center">
-            <label class="d-flex align-items-center mr-2">ช่วงเวลาที่แสดง</label>
-            <p-calendar class=" mr-2" [(ngModel)]="s_Date" appendTo="body" [showIcon]="true" inputId="icon"
-                dateFormat="dd/mm/yy" placeholder="วันที่เริ่มต้น" [maxDate]="e_Date" [readonlyInput]="true"
-                inputStyleClass="text-center">
-            </p-calendar>
-            <p-calendar [(ngModel)]="e_Date" [showIcon]="true" inputId="icon" dateFormat="dd/mm/yy"
-                placeholder="วันที่สิ้นสุด" [minDate]="s_Date" [readonlyInput]="true"
-                inputStyleClass="text-center style-font">
-            </p-calendar>
-        </span>
-
-        <span class="d-flex align-items-center">
-            <button pButton pRipple type="button" icon="pi pi-check" class="d-flex align-items-center style-button"
-                (click)="onConfirm()" label="ยืนยัน">
-            </button>
-        </span>
+        <form [formGroup]="weeklyFormat_Form" (ngSubmit)="onSubmitWeeklyFormat()"
+            class="d-flex justify-content-between align-items-center">
+            <span class=" d-flex align-items-center">
+                <label class="d-flex align-items-center mr-2" for="date">ช่วงเวลาที่แสดง</label>
+                <p-calendar class=" mr-2" formControlName="s_date" appendTo="body" [showIcon]="true" inputId="date"
+                    dateFormat="dd/mm/yy" placeholder="วันที่เริ่มต้น" [maxDate]="weeklyFormat_Form.value.e_date" [readonlyInput]="true"
+                    inputStyleClass="text-center">
+                </p-calendar>
+                <p-calendar formControlName="e_date" [showIcon]="true" inputId="date" dateFormat="dd/mm/yy"
+                    placeholder="วันที่สิ้นสุด" [minDate]="weeklyFormat_Form.value.s_date" [readonlyInput]="true"
+                    inputStyleClass="text-center style-font">
+                </p-calendar>
+            </span>
+            <span class="d-flex align-items-center">
+                <button pButton pRipple type="submit" icon="pi pi-check"
+                    class="ml-2 d-flex align-items-center style-button" label="ยืนยัน">
+                </button>
+            </span>
+        </form>
     </div>
+
     <!-- รูปแบบการแสดง เป็นเดือน -->
     <div *ngIf="value_Pattern == 2" class="d-flex justify-content-between align-items-center mt-2">
         <span class="d-flex align-items-center">
-            <label class="d-flex align-items-center mr-2">รูปแบบการแสดง</label>
-            <p-dropdown class="text-center" [(ngModel)]="value_Pattern" styleClass="d-flex align-items-center"
+            <label class="d-flex align-items-center mr-2" for="monthly">รูปแบบการแสดง</label>
+            <p-dropdown class="text-center" inputId="monthly" [(ngModel)]="value_Pattern" styleClass="d-flex align-items-center"
                 placeholder="แสดงเป็นวัน" [options]="item_Pattern">
             </p-dropdown>
         </span>
+        <form [formGroup]="monthlyFormat_Form" (ngSubmit)="onSubmitMonthlyFormat()"
+            class="d-flex justify-content-between align-items-center">
+            <span class="d-flex align-items-center">
+                <label class="d-flex align-items-center mr-2" for="month">ช่วงเวลาที่แสดง</label>
+                <p-calendar inputId="month" class="mr-2" formControlName="s_month" view="month" dateFormat="mm/yy"
+                    [yearNavigator]="true" [showIcon]="true" placeholder="เดือนเริ่มต้น" [maxDate]="monthlyFormat_Form.value.e_month"
+                    [readonlyInput]="true" [readonlyInput]="true" yearRange="2000:2050"></p-calendar>
 
-        <span class="d-flex align-items-center">
-            <label class="d-flex align-items-center mr-2" for="month">ช่วงเวลาที่แสดง</label>
-            <p-calendar class="mr-3" [(ngModel)]="s_Month" view="month" dateFormat="mm/yy" [yearNavigator]="true"
-                [showIcon]="true" placeholder="เดือนเริ่มต้น" [maxDate]="e_Month" [readonlyInput]="true"
-                [readonlyInput]="true" inputId="month" yearRange="2000:2030"></p-calendar>
-
-            <p-calendar [(ngModel)]="e_Month" view="month" dateFormat="mm/yy" [yearNavigator]="true" [showIcon]="true"
-                placeholder="เดือนสิ้นสุด" [minDate]="s_Month" [readonlyInput]="true" [readonlyInput]="true"
-                inputId="month" yearRange="2000:2030"></p-calendar>
-        </span>
-
-        <span class="d-flex align-items-center">
-            <button pButton pRipple type="button" icon="pi pi-check" class="d-flex align-items-center style-button"
-                (click)="onConfirm()" label="ยืนยัน">
-            </button>
-        </span>
+                <p-calendar inputId="month" formControlName="e_month" view="month" dateFormat="mm/yy" [yearNavigator]="true"
+                    [showIcon]="true" placeholder="เดือนสิ้นสุด" [minDate]="monthlyFormat_Form.value.s_month" [readonlyInput]="true"
+                    [readonlyInput]="true" yearRange="2000:2050"></p-calendar>
+            </span>
+            <span class="d-flex align-items-center">
+                <button pButton pRipple type="submit" icon="pi pi-check"
+                    class="ml-2 d-flex align-items-center style-button" label="ยืนยัน">
+                </button>
+            </span>
+        </form>
     </div>
 
     <br>
     <br>
+
     <!-- -------------------------------กราฟแสดงเป็นรายวัน--------------------------------------- -->
     <div *ngIf="value_Pattern == 0" class="grid p-0 m-0">
-        <div class="card col-9 d-flex justify-content-start align-items-center">
+        <div class="card col-9 d-flex">
             <p-chart class="style-font" type="line" [data]="chartLine" [options]="chartLineOptions" [responsive]="true"
                 style="width: 100%;"></p-chart>
         </div>
-        <div class=" col-3 d-flex justify-content-center align-items-center">
+        <div class="pl-3 col-3 d-flex">
+            <div style="width: 100%;">
+                <span>
+                    <div class="d-flex justify-content-start align-items-center"
+                        [ngStyle]="{backgroundColor:'var(--blue-500)'}">
+                        <h6 class="p-2 m-0 " style="color: white"> อุณหภูมิสูงเกินกว่ากำหนด </h6>
+                    </div>
+                    <p-table class="d-inline" [value]="highTemperature" [resizableColumns]="true"
+                        styleClass="p-datatable-gridlines" [rows]="11" [pageLinks]="1" [paginator]="true"
+                        selectionMode="single" sortMode="single">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="p-1 style-font" style="width: 50%; text-align:
+                        center;">เวลา</th>
+                                <th class="p-1 style-font" style="width: 50%; text-align:
+                        center;">อุณหภูมิ</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-col>
+                            <tr>
+                                <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
+                                <td class="p-0 style-font" style="text-align: center;">{{col.temperature}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- -------------------------------กราฟแสดงเป็นรายสัปดาห์--------------------------------------- -->
+    <div *ngIf="value_Pattern == 1" class="grid p-0 m-0">
+        <div class="card col-9 d-flex">
+            <p-chart type="bar" [data]="ChartBar" [options]="ChartOptionsBar" [responsive]="true" style="width: 100%">
+            </p-chart>
+        </div>
+        <div class="pl-3 col-3 d-flex">
+            <div style="width: 100%;">
+                <span>
+                    <div class="d-flex justify-content-start align-items-center"
+                        [ngStyle]="{backgroundColor:'var(--blue-500)'}">
+                        <h6 class="p-2 m-0 " style="color: white"> อุณหภูมิสูงเกินกว่ากำหนด </h6>
+                    </div>
+                    <p-table class="d-inline" [value]="highTemperature" [paginator]="true" selectionMode="single"
+                        styleClass="p-datatable-gridlines p-datatable-sm" [rows]="11" [pageLinks]="1">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="p-1 style-font" style="width: 50%; text-align:
+                        center;">เวลา</th>
+                                <th class="p-1 style-font" style="width: 50%; text-align:
+                        center;">อุณหภูมิ</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-col>
+                            <tr>
+                                <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
+                                <td class="p-0 style-font" style="text-align: center;">{{col.temperature}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- -------------------------------กราฟแสดงเป็นเดือน--------------------------------------- -->
+    <div *ngIf="value_Pattern == 2" class="grid p-0 m-0">
+        <div class="card col-9 d-flex">
+            <p-chart type="bar" [data]="ChartBar" [options]="ChartOptionsBar" [responsive]="true" style="width: 100%">
+            </p-chart>
+        </div>
+        <div class="pl-3 col-3 d-flex">
             <span>
                 <div class="d-flex justify-content-start align-items-center"
                     [ngStyle]="{backgroundColor:'var(--blue-500)'}">
@@ -107,70 +179,6 @@
                 </div>
                 <p-table class="d-inline" [value]="highTemperature" [paginator]="true" selectionMode="single"
                     styleClass="p-datatable-gridlines p-datatable-sm" [rows]="11" [pageLinks]="1">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th class="p-1 style-font" style="width: 50%; text-align:
-                    center;">เวลา</th>
-                            <th class="p-1 style-font" style="width: 50%; text-align:
-                    center;">อุณหภูมิ</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-col>
-                        <tr>
-                            <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start;">{{col.time}}</td>
-                            <td class="p-0 style-font" style="text-align: center;">{{col.temperature}}</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </span>
-        </div>
-    </div>
-    <!-- -------------------------------กราฟแสดงเป็นรายสัปดาห์--------------------------------------- -->
-    <div *ngIf="value_Pattern == 1" class="grid p-0 m-0">
-        <div class="card col-9 d-flex justify-content-start align-items-center">
-            <p-chart type="bar" [data]="BarChart" [options]="BarChartOptions" [responsive]="true" style="width: 100%">
-            </p-chart>
-        </div>
-        <div class=" col-3 d-flex justify-content-center align-items-center">
-            <span>
-                <div class="d-flex justify-content-start align-items-center"
-                    [ngStyle]="{backgroundColor:'var(--blue-500)'}">
-                    <h6 class="p-2 m-0 " style="color: white"> อุณหภูมิสูงเกินกว่ากำหนด </h6>
-                </div>
-                <p-table class="d-inline" [value]="highTemperature" [paginator]="true" selectionMode="single"
-                    styleClass="p-datatable-gridlines p-datatable-sm" [rows]="8" [pageLinks]="1">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th class="p-1 style-font" style="width: 50%; text-align:
-                    center;">เวลา</th>
-                            <th class="p-1 style-font" style="width: 50%; text-align:
-                    center;">อุณหภูมิ</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-col>
-                        <tr>
-                            <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
-                            <td class="p-0 style-font" style="text-align: center;">{{col.temperature}}</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </span>
-        </div>
-    </div>
-    <!-- -------------------------------กราฟแสดงเป็นเดือน--------------------------------------- -->
-    <div *ngIf="value_Pattern == 2" class="grid p-0 m-0">
-        <div class="card col-9 d-flex justify-content-start align-items-center">
-            <p-chart type="bar" [data]="BarChart" [options]="BarChartOptions" [responsive]="true" style="width: 100%">
-            </p-chart>
-        </div>
-        <div class=" col-3 d-flex justify-content-center align-items-center">
-            <span>
-                <div class="d-flex justify-content-start align-items-center"
-                    [ngStyle]="{backgroundColor:'var(--blue-500)'}">
-                    <h6 class="p-2 m-0 " style="color: white"> อุณหภูมิสูงเกินกว่ากำหนด </h6>
-                </div>
-                <p-table class="d-inline" [value]="highTemperature" [paginator]="true" selectionMode="single"
-                    styleClass="p-datatable-gridlines p-datatable-sm" [rows]="8" [pageLinks]="1">
                     <ng-template pTemplate="header">
                         <tr>
                             <th class="p-1 style-font" style="width: 50%; text-align:
@@ -196,30 +204,33 @@
             <p-chart type="pie" [data]="chartPie" [options]="chartPieOptions" [responsive]="true" style="width: 40%">
             </p-chart>
         </div>
-        <div class=" col-3 d-flex justify-content-center align-items-center">
-            <span>
-                <div class="d-flex justify-content-start align-items-center"
-                    [ngStyle]="{backgroundColor:'var(--blue-500)'}">
-                    <h6 class="p-2 m-0 " style="color: white"> ใส่หน้ากากผิดวิธี </h6>
-                </div>
-                <p-table class="d-inline" [value]="maskMisapplication" [paginator]="true" selectionMode="single"
-                    styleClass="p-datatable-gridlines p-datatable-sm" [rows]="8" [pageLinks]="1">
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th class="p-1 style-font" style="width: 50%; text-align:
-                    center;">เวลา</th>
-                            <th class="p-1 style-font" style="width: 50%; text-align:
-                    center;">รูปแบบ</th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-col>
-                        <tr>
-                            <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
-                            <td class="p-0 style-font" style="text-align: center;">{{col.maskpattern}}</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
-            </span>
+        <div class="pl-3 col-3 d-flex">
+            <div style="width: 100%;">
+                <span>
+                    <div class="d-flex justify-content-start align-items-center"
+                        [ngStyle]="{backgroundColor:'var(--blue-500)'}">
+                        <h6 class="p-2 m-0 " style="color: white"> ใส่หน้ากากผิดวิธี & ไม่ใส่ </h6>
+                    </div>
+                    <p-table class="d-inline" [value]="maskMisapplication" [resizableColumns]="true"
+                        styleClass="p-datatable-gridlines" [rows]="8" [paginator]="true" [pageLinks]="1"
+                        selectionMode="single" sortMode="single">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th class="p-1 style-font" style="width: 50%; text-align:
+                        center;">เวลา</th>
+                                <th class="p-1 style-font" style="width: 50%; text-align:
+                        center;">รูปแบบ</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-col>
+                            <tr>
+                                <td class="pl-1 pr-0 pb-0 pt-0 style-font" style="text-align: start; ">{{col.time}}</td>
+                                <td class="p-0 style-font" style="text-align: center;">{{col.maskpattern}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </span>
+            </div>
         </div>
     </div>
 </div>

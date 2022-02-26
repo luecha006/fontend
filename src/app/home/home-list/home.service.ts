@@ -14,4 +14,9 @@ export class HomeService {
     return this.http.get<any>('http://localhost:8080/facemask/fetchAllMaskPattern');
   }
 
+
+
+  selectCurrentDayFormat(data: any): Observable<any>{
+    return this.http.post<any>("http://localhost:8080/facemask/selectWithMaskPattern", data);
+  }
 }
