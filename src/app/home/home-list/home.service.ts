@@ -10,11 +10,13 @@ export class HomeService {
 
   constructor(private http: HttpClient) { }
 
+  selectHomePage(): Observable<any>{
+    return this.http.get<any>("http://localhost:8080/facemask/homepage");
+  }
+
   fetchAllMaskPattern(): Observable<any>{
     return this.http.get<any>('http://localhost:8080/facemask/fetchAllMaskPattern');
   }
-
-
 
   selectCurrentDayFormat(data: any): Observable<any>{
     return this.http.post<any>("http://localhost:8080/facemask/selectWithMaskPattern", data);

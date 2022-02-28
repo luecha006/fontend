@@ -1,7 +1,8 @@
+import { ConvertDateTime } from './convertDateTime';
 import { HomeService } from './home.service';
 import { Component, OnInit, Inject } from "@angular/core";
-import { SelectItem, SelectItemGroup } from "primeng/api";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { SelectItem } from "primeng/api";
+import { FormBuilder, FormGroup } from "@angular/forms";
 @Component({
   selector: "app-home-list",
   templateUrl: "./home-list.component.html",
@@ -38,9 +39,7 @@ export class HomeListComponent implements OnInit {
   weeklyFormat_Form: FormGroup;
   monthlyFormat_Form: FormGroup;
 
-
-  myDate: any;
-
+  convert = new ConvertDateTime();
 
   constructor(@Inject(FormBuilder) fb: FormBuilder,
     private homeService: HomeService) {
@@ -67,32 +66,44 @@ export class HomeListComponent implements OnInit {
     ];
 
     this.value_Pattern = "0"; //start pattern
-
-    const currentDate = new Date(); //default date
-    // this.s_date = currentDate;
-    // this.e_date = currentDate;
-
-    this.homeService.fetchAllMaskPattern().subscribe((response) => {
-      // console.log(response);
-      this.onSplitPattern(response);
-    }, (error) => {
-      console.log(error);
-    });
+    
   }
 
   ngOnInit() {
     console.log('home componenr');
+
+    console.log('date to string ', this.convert.DateToFormatSring());
+
+    console.log('string to date ', this.convert.StringToDate('01/01/2020'));
+   
+
+
+
+    this.homeService.selectHomePage().subscribe((response) => {
+      console.log(response);
+      this.onSplitPattern(response);
+    }, (error) => {
+      console.log(error);
+    });
+
+    // this.homeService.fetchAllMaskPattern().subscribe((response) => {
+    //   // console.log(response);
+    //   this.onSplitPattern(response);
+    // }, (error) => {
+    //   console.log(error);
+    // });
   }
 
-
-  onSplitPattern(response: any): void { //ฟังก์ชันแยกข้อมูลแต่ละแบบเพื่อเอาไปแสดง
+  //ฟังก์ชันแยกข้อมูลแต่ละแบบเพื่อเอาไปแสดง
+  onSplitPattern(response: any): void {
 
     // เคลียร์ค่าให้เป็นค่าว่างทั้งหมดก่อน
     this.maskMisapplication = [];
-    this.maskMisapplication = [];
     this.highTemperature = [];
+
     this.chartLineData = [];
     this.chartLineLable = [];
+
     this.chartPieData = [];
     this.chartPieData = [];
     this.chartPieData = [];
@@ -127,8 +138,6 @@ export class HomeListComponent implements OnInit {
       this.chartLineLable.push(response[i].time);
     }
 
-    //เก็บค่าลงในตัวแปรของ chartPie
-    // console.log('chartPieData ',ChartPie_highTemp,' ',ChartPie_O,' ',' ',ChartPie_M,' ',ChartPie_W);
     this.chartPieData.push(ChartPie_highTemp);
     this.chartPieData.push(ChartPie_O);
     this.chartPieData.push(ChartPie_M);
@@ -145,8 +154,8 @@ export class HomeListComponent implements OnInit {
     if (this.currentDayFormat_Form.value.s_time === '' || this.currentDayFormat_Form.value.e_time === '') {
       alert('กรุณาเลือกเวลาเริ่มต้นและเวลาสิ้นสุดก่อน');
     } else {
-      console.log('s_time ' + this.currentDayFormat_Form.value.s_time.toLocaleTimeString("th-TH", { timeZone: "UTC" }));
-      console.log('e_time ' + this.currentDayFormat_Form.value.e_time.toLocaleTimeString("en-GB", { timeZone: "UTC" }));
+      // console.log('s_time ' + this.currentDayFormat_Form.value.s_time.toLocaleTimeString("th-TH", { timeZone: "UTC" }));
+      // console.log('e_time ' + this.currentDayFormat_Form.value.e_time.toLocaleTimeString("en-GB", { timeZone: "UTC" }));
 
       let currentDay = {
         pattern: this.value_Pattern,
@@ -154,12 +163,11 @@ export class HomeListComponent implements OnInit {
         e_value: this.currentDayFormat_Form.value.e_time.toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok" })
       }
 
-      // toLocaleTimeString("th-TH", { timeZone: "Asia/Bangkok" }) รูปแบบเวลาแบบไทย
-
-      // console.log('currentDay ', currentDay);
-
       this.homeService.selectCurrentDayFormat(currentDay).subscribe((response) => {
         console.log('selectCurrentDayFormat ', response);
+
+
+
         this.onSplitPattern(response);
       }, (error) => {
         console.log(error);
@@ -284,13 +292,4 @@ export class HomeListComponent implements OnInit {
       ]
     };
   }
-
-
-  onTesttime(event: any) {
-    let d = new Date(Date.parse(event));
-    this.myDate = new Date(0);
-
-    console.log('myDate ', this.myDate);
-  }
-
 }
