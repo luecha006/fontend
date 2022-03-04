@@ -1,4 +1,4 @@
-import { AppService } from './app-service.service';
+import { AppService } from './appservice.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MenuItem, PrimeNGConfig} from "primeng/api";
@@ -11,7 +11,7 @@ import { Password } from 'primeng/password';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'workshop-primeng12';
+  title = 'workshop-fontend';
 
   date: Date;
   list_Menu: MenuItem[];

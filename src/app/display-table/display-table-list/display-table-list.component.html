@@ -5,7 +5,7 @@
             หน้าตารางแสดงผล</h5>
     </div>
 
-    <p-table class="d-inline" [value]="DisplayTable_Data" [resizableColumns]="true" styleClass="p-datatable-gridlines" [rows]="13"
+    <p-table class="d-inline" [value]="DisplayTable_Data" [resizableColumns]="true" styleClass="p-datatable-gridlines" [rows]="12"
         [paginator]="true" [pageLinks]="3" selectionMode="single" sortMode="single">
         <ng-template pTemplate="header">
             <tr>
@@ -23,7 +23,7 @@
             <tr>
                 <td class="pl-2 pr-1 pt-1 pb-1  style-font" style="text-align: start; ">{{col.date}}</td>
                 <td class="pl-2 pr-1 pt-1 pb-1 style-font" style="text-align: start;">{{col.time}}</td>
-                <td class="p-1 style-font" style="text-align: center;">{{col.maskpattern}}</td>
+                <td class="pl-2 pr-1 pt-1 pb-1 style-font" style="text-align: start;">{{col.maskpattern}}</td>
                 <td class="p-1 style-font" style="text-align: center;">{{col.temperature}}</td>
             </tr>
         </ng-template>
