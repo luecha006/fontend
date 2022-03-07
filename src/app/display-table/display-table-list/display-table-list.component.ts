@@ -1,7 +1,7 @@
-import { DisplayTableService } from './display-table.service';
+import { DisplayTableService } from '../display-table.service';
 import { Component, OnInit } from "@angular/core";
-import { ConvertDateTime } from 'src/app/home/home-list/module/ConvertDateTime';
-import { ConvertFaceMaskPattern } from 'src/app/home/home-list/module/ConvertFaceMaskPattern';
+import { ConvertDateTime } from 'src/app/module/ConvertDateTime';
+import { ConvertFaceMaskPattern } from 'src/app/module/ConvertFaceMaskPattern';
 // import { HttpClient } from "@angular/common/http";
 // import { Injectable } from "@angular/core";
 
@@ -21,6 +21,9 @@ export class DisplayTableListComponent implements OnInit {
   // constructor(private carService: CarService) {}
   constructor(private tableService: DisplayTableService) {
 
+  }
+
+  ngOnInit(): void {
     this.tableService.fetchAllMaskPattern().subscribe((response) => {
 
       this.DisplayTable_Data=[];
@@ -40,10 +43,4 @@ export class DisplayTableListComponent implements OnInit {
     });
 
   }
-
-  ngOnInit(): void {
-
-  }
-
-  onBack(): void { }
 }

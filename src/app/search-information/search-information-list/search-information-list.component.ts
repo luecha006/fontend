@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ConvertFaceMaskPattern } from './../../module/ConvertFaceMaskPattern';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
 import { SelectItem, SelectItemGroup } from "primeng/api";
+import { SearchInformationService } from '../search-information.service';
 
 @Component({
   selector: 'app-search-information-list',
@@ -7,77 +10,133 @@ import { SelectItem, SelectItemGroup } from "primeng/api";
   styleUrls: ['./search-information-list.component.scss']
 })
 export class SearchInformationListComponent implements OnInit {
-  s_Date: Date;
-  e_Date: Date;
-  s_Time: Date;
-  e_Time: Date;
-  data_display: any;
+  data_display: any = [];
   start_Semperature: number;
   end_Semperature: number;
   maskPattern: string;
   value_Pattern: string;
   mask_Pattern: SelectItem[];
-  constructor() {
-    const currentDate = new Date(); //default date
-    this.s_Date = currentDate;
-    this.e_Date = currentDate;
-    // this.start_Semperature = 0.0;
+
+  timeForm: FormGroup;
+  dateForm: FormGroup;
+  temperatureForm: FormGroup;
+
+  convertPattern = new ConvertFaceMaskPattern();
+
+  constructor(@Inject(FormBuilder) fb: FormBuilder,
+    private searchInformationService: SearchInformationService) {
     this.value_Pattern = '0';
 
     this.mask_Pattern = [
       { label: "ทั้งหมด", value: "0" },
-      { label: "ระบุไม่ได้", value: "1" },
-      { label: "ใส่หน้ากากอนามัยผิดวิธี", value: "2" },
-      { label: "ใส่หน้ากากอนามัยถูกวิธี", value: "3" },
-      { label: "ไม่ได้ใส่หน้ากากอนามัย", value: "4" },
+      { label: "ใส่หน้ากากอนามัยถูกวิธี", value: "w" },
+      { label: "ไม่ใส่หน้ากากอนามัย", value: "o" },
+      { label: "ใส่หน้ากากอนามัยผิดวิธี", value: "m" },
     ];
+
+    this.timeForm = fb.group({
+      s_time: fb.control(''),
+      e_time: fb.control('')
+    });
+
+    this.dateForm = fb.group({
+      s_date: fb.control(''),
+      e_date: fb.control('')
+    });
+
+    this.temperatureForm = fb.group({
+      s_temperature: fb.control(null),
+      e_temperature: fb.control(null)
+    });
   }
 
   ngOnInit(): void {
-    this.data_display = [
-      { A: "A1", B: "B1" },
-      { A: "A2", B: "B2" },
-      { A: "A3", B: "B3" },
-      { A: "A4", B: "B4" },
-      { A: "A5", B: "B1" },
-      { A: "A6", B: "B2" },
-      { A: "A7", B: "B3" },
-      { A: "A8", B: "B4" },
-      { A: "A9", B: "B1" },
-      { A: "A10", B: "B2" },
-      { A: "A11", B: "B3" },
-      { A: "A12", B: "B4" },
-      { A: "A13", B: "B1" },
-      { A: "A14", B: "B2" },
-      { A: "A15", B: "B3" },
-      { A: "A16", B: "B4" },
-      { A: "A17", B: "B1" },
-      { A: "A18", B: "B2" },
-      { A: "A19", B: "B3" },
-      { A: "A20", B: "B4" },
-      { A: "A21", B: "B1" },
-      { A: "A22", B: "B2" },
-      { A: "A23", B: "B3" },
-      { A: "A24", B: "B4" },
-      { A: "A25", B: "B1" },
-      { A: "A26", B: "B2" },
-      { A: "A27", B: "B3" },
-      { A: "A28", B: "B4" },
-      { A: "A29", B: "B1" },
-      { A: "A30", B: "B2" }
-    ];
   }
 
   onSearch(): void {
+    var s_time: any;
+    var e_time: any;
+    var s_date: any;
+    var e_date: any;
+    var s_temperature: number;
+    var e_temperature: number;
+    if (this.timeForm.value.s_time === '') {
+      s_time = null;
+    } else {
+      s_time = this.timeForm.value.s_time.toLocaleTimeString('en-GB', { timeZone: 'Asia/Bangkok' });
+    }
 
+    if (this.timeForm.value.e_time === '') {
+      e_time = null;
+    } else {
+      e_time = this.timeForm.value.e_time.toLocaleTimeString('en-GB', { timeZone: 'Asia/Bangkok' });
+    }
+
+    if (this.dateForm.value.s_date === '') {
+      s_date = null;
+    } else {
+      s_date = this.dateForm.value.s_date.toLocaleDateString('en-GB', { timeZone: 'Asia/Bangkok' });
+    }
+
+    if (this.dateForm.value.e_date === '') {
+      e_date = null;
+    } else {
+      e_date = this.dateForm.value.e_date.toLocaleDateString('en-GB', { timeZone: 'Asia/Bangkok' });
+    }
+
+    if (this.temperatureForm.value.s_temperature == null) {
+      s_temperature = 0
+    } else {
+      s_temperature = this.temperatureForm.value.s_temperature;
+    }
+
+    if (this.temperatureForm.value.e_temperature == null) {
+      e_temperature = 0
+    } else {
+      e_temperature = this.temperatureForm.value.e_temperature;
+    }
+
+    var searchInFormaTionData = {
+      pattern: this.value_Pattern,
+      s_time: s_time,
+      e_time: e_time,
+      s_date: s_date,
+      e_date: e_date,
+      s_temperature: s_temperature,
+      e_temperature: e_temperature
+    }
+
+    this.searchInformationService.Search(searchInFormaTionData).subscribe((response) => {
+      console.log(response);
+      this.data_display = [];
+      for (var i in response) {
+        const date_format = new Date(response[i].date);
+        let currentDay = {
+          date: date_format.toLocaleDateString('en-GB', {timeZone: 'Asia/Bangkok' }),
+          time: response[i].time,
+          maskpattern: this.convertPattern.ConvertAbbreviationToFullName(response[i].maskpattern),
+          temperature: response[i].temperature
+        };
+        this.data_display.push(currentDay);
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   onClear(): void {
-
+    this.value_Pattern = '0';
+    this.timeForm.setValue({
+      s_time: '',
+      e_time: ''
+    });
+    this.dateForm.setValue({
+      s_date: '',
+      e_date: ''
+    });
+    this.temperatureForm.setValue({
+      s_temperature: null,
+      e_temperature: null
+    });
   }
-
-  onDownload() : void {
-    
-  }
-
 }

@@ -1,5 +1,4 @@
 <!-- <div class="spacer"></div> -->
-
 <div class="container-fluid shadow-3 py-2">
     <div class="grid">
         <div class="col-12 md-12 lg-12 d-flex align-items-center
@@ -8,23 +7,18 @@
             <h3 class="d-none d-md-inline-flex mb-0">
                 ระบบตรวจสอบการใส่หน้ากากอนามัยที่ถูกต้อง
             </h3>
-
             <div class="spacer"></div>
-
             <button pButton pRipple type="button" class="p-button-rounded mr-3 p-0" style="display: flexbox; float:
                 right; border: none; height: 30px; width: 30px;" (click)="bell.toggle($event)" [ngStyle]="{color:'var(--blue-500)'
                 ,backgroundColor:'var(--gray-200)'}"> <i class="pi pi-bell ml-1 " pBadge value="2"
                     severity="danger"></i>
             </button>
-
             <!-- <p-button styleClass="p-mr-2"><i class="pi pi-bell p-mr-4 " pBadge style="font-size: 15px"
                     value="2"></i> </p-button> icon="pi pi-bell" -->
-
             <p-menu #bell class="style-font" [popup]="true" [model]="list_Warn" required appendTo="body"
                 visible="'false'"
                 [style]="{'width': 'auto','font-family':'BaiJamjuree, sans-serif','color':'black' ,'font-size': '16px'}">
             </p-menu>
-
             <p-button-icon pButton pRipple class="p-button-text border-radius mt-0 style-font" type="button"
                 label="{{admin_name}}" label="Log in" icon="pi pi-fw pi-angle-down" (click)="admin.toggle($event)"
                 style=" background-color: white; color: black; border: none ;border-radius: 0; border-left:'1px solid var(--surface-d)';"
@@ -198,9 +192,10 @@
 <!-- ------------------------------------------- ตั้งค่าอุณหภูมิ ----------------------------------------------- -->
 <p-dialog header="" [(visible)]="isSetTemperature_form" [modal]="true" [style]="{width: '25%','height':'auto'}"
     [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false">
-    <div class="mt-0 mb-5">
+    <div class="mt-0 mb-5 p-d-flex p-jc-center">
         <h5 class="mb-5 p-2" style="text-align: center;"> ตั้งค่าอุณหภูมิ </h5>
-        <div class="grid d-flex flex-column">
+        <div class="grid d-flex flex-column p-jc-center">
+          <p class="mb-2" style="text-align: center;">{{formTemperature.value.temperature | json}}</p>
             <form [formGroup]="formTemperature">
                 <div class="col">
                     <p-slider formControlName="temperature" [min]="0" [max]="100" [step]="0.5"
@@ -227,7 +222,6 @@
     <div class="mt-0 mb-5">
         <h5 class="mb-5 p-2" style="text-align: center;"> ลบผู้ดูแลระบบ </h5>
         <div class="grid d-flex flex-column">
-
             <p-table class="d-inline" [value]="listAdmin" [paginator]="true" selectionMode="single"
                 styleClass="p-datatable-gridlines p-datatable-sm" [rows]="5" [pageLinks]="2">
                 <ng-template pTemplate="header">
@@ -245,7 +239,7 @@
                         <td class="p-0 style-font" style="text-align: center;">{{col.username}}</td>
                         <td class="p-0 style-font" style="text-align: center;">{{col.type_admin}}</td>
                         <td class="p-1 style-font" style="text-align: center;">
-                            <button pButton pRipple icon="pi pi-trash" class="p-0 m-0 p-button-danger p-button-sm" 
+                            <button pButton pRipple icon="pi pi-trash" class="p-0 m-0 p-button-danger p-button-sm"
                            [ngStyle]="{'border-radius': '2px'}" (click)="onSubmit_Delect(col)"></button>
                         </td>
                     </tr>

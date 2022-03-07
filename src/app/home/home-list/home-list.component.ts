@@ -1,6 +1,6 @@
-import { ConvertFaceMaskPattern } from './module/ConvertFaceMaskPattern';
-import { ConvertDateTime } from './module/ConvertDateTime';
-import { HomeService } from './home.service';
+import { ConvertFaceMaskPattern } from '../../module/ConvertFaceMaskPattern';
+import { ConvertDateTime } from '../../module/ConvertDateTime';
+import { HomeService } from '../home.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -27,13 +27,13 @@ export class HomeListComponent implements OnInit {
   item_Pattern: SelectItem[];
   value_Pattern: any;
 
-  // -------------------------------------charLine-----------------------------------------
+  // charLine
   data_Tabel: any;
   chartLine: any;
   chartLineData: any = [];
   chartLineLable: any = [];
   chartLineOptions: any;
-  // -------------------------------------chartPie-----------------------------------------
+  // chartPie
   chartPieLable = [
     'อุณหภูมิเกินกำหนด',
     'ไม่ใส่หน้าหน้ากาก',
@@ -51,7 +51,7 @@ export class HomeListComponent implements OnInit {
   chartPie_Monthly: any;
   chartPieOptions_Monthly: any;
   chartPieData_Monthly: any = [];
-  // -------------------------------------ChartBar-----------------------------------------
+  // ChartBar
   ChartBar_weekly: any;
   ChartBar_monthly: any;
   ChartBarOptions: any;
@@ -67,7 +67,7 @@ export class HomeListComponent implements OnInit {
   ChartBarDataPatternWithOutMask_monthly: any = [];
   ChartBarDataPatternHighTemperature_monthly: any = [];
   ChartBarDataPatternMaskWronWay_monthly: any = [];
-  // ------------------------------------- table data -------------------------------------
+  // table data
   highTemperature_CurrentDay: any = [];
   highTemperature_Weekly: any = [];
   highTemperature_Monthly: any = [];
@@ -76,7 +76,7 @@ export class HomeListComponent implements OnInit {
   maskMisapplicationAndWithOutMask_Monthly: any = [];
   maskMisapplication_Weekly: any = [];
   maskMisapplication_Monthly: any = [];
-  // ------------------------------------- FormGroup -------------------------------------
+  // FormGroup
   currentDayFormat_Form: FormGroup;
   weeklyFormat_Form: FormGroup;
   monthlyFormat_Form: FormGroup;
@@ -113,7 +113,7 @@ export class HomeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('home componenr');
+    // console.log('home componenr');
     //ดึงข้อมูลมาทั้งหมดมาแสดงเป็นรายวัน
     this.homeService.selectHomePageDateCurrent().subscribe(
       (response) => {
@@ -130,8 +130,6 @@ export class HomeListComponent implements OnInit {
         // console.log('response ', response);
         this.onSplitDataToWeekly(response);
         this.onSplitDataToMonthly(response);
-        // console.log('The chartPieData_Weekly is ', this.chartPieData_Weekly);
-        // console.log('The chartPieData_Monthly is ', this.chartPieData_Monthly);
       },
       (error) => {
         console.log(error);
@@ -437,7 +435,7 @@ export class HomeListComponent implements OnInit {
         ),
       };
 
-      this.homeService.selectCurrentDayFormat(currentDay).subscribe(
+      this.homeService.selectHomePageFormat(currentDay).subscribe(
         (response) => {
           // console.log('selectCurrentDayFormat ', response);
           this.onSplitDataToCurrentDay(response);
@@ -470,7 +468,7 @@ export class HomeListComponent implements OnInit {
 
       // console.log('weekly ', weekly);
 
-      this.homeService.selectCurrentDayFormat(weekly).subscribe(
+      this.homeService.selectHomePageFormat(weekly).subscribe(
         (response) => {
           // console.log('selectWeeklyFormat ', response);
           this.onSplitDataToWeekly(response);
@@ -489,36 +487,26 @@ export class HomeListComponent implements OnInit {
     ) {
       alert('กรุณาเลือกเดือนเริ่มต้นและเดือนสิ้นสุดก่อน');
     } else {
-      console.log(
-        's_month ' +
-          this.monthlyFormat_Form.value.s_month.toLocaleDateString('en-GB', {
-            timeZone: 'Asia/Bangkok',
-          })
+      var e_date = new Date(
+        this.monthlyFormat_Form.value.e_month.getFullYear(),
+        this.monthlyFormat_Form.value.e_month.getMonth() + 1,
+        0
       );
-      console.log(
-        's_month ' +
-          this.monthlyFormat_Form.value.e_month.toLocaleDateString('en-GB', {
-            timeZone: 'Asia/Bangkok',
-          })
-      );
-
       let monthly = {
         pattern: this.value_Pattern,
         s_value: this.monthlyFormat_Form.value.s_month.toLocaleDateString(
           'en-GB',
           { timeZone: 'Asia/Bangkok' }
         ),
-        e_value: this.monthlyFormat_Form.value.e_month.toLocaleDateString(
-          'en-GB',
-          { timeZone: 'Asia/Bangkok' }
-        ),
+        e_value: e_date.toLocaleDateString('en-GB', {
+          timeZone: 'Asia/Bangkok',
+        }),
       };
 
       // console.log('monthly ', monthly);
 
-      this.homeService.selectCurrentDayFormat(monthly).subscribe(
+      this.homeService.selectHomePageFormat(monthly).subscribe(
         (response) => {
-          // console.log('selectMonthlyFormat ', response);
           this.onSplitDataToMonthly(response);
         },
         (error) => {
@@ -640,7 +628,6 @@ export class HomeListComponent implements OnInit {
   }
 
   onChangePattern() {
-    console.log(this.value_Pattern);
     if (this.value_Pattern === '0') {
       this.weeklyFormat_Form.setValue({
         s_date: '',
@@ -650,8 +637,17 @@ export class HomeListComponent implements OnInit {
         s_month: '',
         e_month: '',
       });
-      this.onSetupChartBar_Monthly();
-    } else if (this.value_Pattern === '1') {
+      //ดึงข้อมูลมาทั้งหมดมาแสดงเป็นรายวัน
+      this.homeService.selectHomePageDateCurrent().subscribe(
+        (response) => {
+          this.onSplitDataToCurrentDay(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else if (this.value_Pattern === '1') {
       this.currentDayFormat_Form.setValue({
         s_time: '',
         e_time: '',
@@ -660,8 +656,17 @@ export class HomeListComponent implements OnInit {
         s_month: '',
         e_month: '',
       });
-      this.onSetupChartBar_Weekly();
-    } else if (this.value_Pattern === '2') {
+      //ดึงข้อมูลมาทั้งหมดมาแสดงเป็นรายอาทิตย์
+      this.homeService.fetchAllMaskPattern().subscribe(
+        (response) => {
+          this.onSplitDataToWeekly(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+    else if (this.value_Pattern === '2') {
       this.currentDayFormat_Form.setValue({
         s_time: '',
         e_time: '',
@@ -670,7 +675,15 @@ export class HomeListComponent implements OnInit {
         s_date: '',
         e_date: '',
       });
-      this.onSetupChartBar_Monthly();
+      //ดึงข้อมูลมาทั้งหมดมาแสดงเป็นรายเดือน
+      this.homeService.fetchAllMaskPattern().subscribe(
+        (response) => {
+          this.onSplitDataToMonthly(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     }
   }
 }

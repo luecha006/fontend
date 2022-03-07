@@ -1,4 +1,4 @@
-import { AppService } from './appservice.service';
+import { AppService } from './app.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MenuItem, PrimeNGConfig} from "primeng/api";
@@ -224,7 +224,7 @@ export class AppComponent implements OnInit {
       username: event.username
     };
     if (event.type_admin === 'root') {
-      alert('คุณไม่สามารถลบผู้ดูแลที่มีสิทธิ์เป็น root ได้');
+      alert('ไม่สามารถลบผู้ดูแลที่มีสิทธิ์เป็น root ได้');
     } else {
       this.appService.delectAdmin(dataDelectAdmin).subscribe((response) => {
         // console.log(response);
