@@ -15,7 +15,6 @@ export class AppService {
       username: data.username,
       password: data.password
     }
-    // console.log(dataLogin)
     return this.http.post<any>('http://localhost:8080/admin/login', dataLogin);
   }
 
@@ -33,5 +32,13 @@ export class AppService {
 
   delectAdmin(data: any): Observable<any>{
     return this.http.post<any>('http://localhost:8080/admin/delete', data);
+  }
+
+  extractTemperature(): Observable<any>{
+    return this.http.get<any>('http://localhost:8080/temperature/extract');
+  }
+
+  saveTemperature(data: any): Observable<any>{
+    return this.http.post<any>('http://localhost:8080/temperature/save', data);
   }
 }

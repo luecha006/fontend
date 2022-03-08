@@ -15,4 +15,20 @@ export class ConvertFaceMaskPattern{
     }
     return patternFullName;
   }
+
+  ConvertAbbreviationToFullNameEnglish(pattern: string): string{
+    let patternFullName = '';
+    if(pattern === 'w')
+    {
+      patternFullName = 'Wear a mask properly';
+    }
+    else if (pattern === 'o')
+    {
+      patternFullName = 'not wearing a mask'
+    }
+    else if (pattern === 'm'){
+      patternFullName = 'wearing a mask the wrong way'
+    }
+    return patternFullName;
+  }
 }

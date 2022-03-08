@@ -59,7 +59,7 @@ export class ExportListComponent implements OnInit {
           this.data.push(
             [this.convertDateTime.DateToFormatSring(response[i].date),
             response[i].time,
-            this.convertPattern.ConvertAbbreviationToFullName(response[i].maskpattern),
+            this.convertPattern.ConvertAbbreviationToFullNameEnglish(response[i].maskpattern),
             response[i].temperature]
           );
         }
@@ -73,41 +73,30 @@ export class ExportListComponent implements OnInit {
   }
 
   createPdf() {
-    var doc = new jsPDF();
+    var date: Date = new Date();
+    var date_fomat =  date.toLocaleDateString( 'en-GB', { timeZone: 'Asia/Bangkok' });
+    var time_fomat =  date.toLocaleTimeString( 'en-GB', { timeZone: 'Asia/Bangkok' });
+    var doc = new jsPDF('portrait', 'px', 'a4');
 
-    doc.addFont('THSarabunNew.ttf', 'THSarabunNew', 'normal');
+    doc.setFontSize(18);
+    doc.text('Project-C10 Export Report PDF', 30, 25);
+    doc.setFontSize(11);
+    doc.setTextColor(100);
 
-    doc.setFont('THSarabunNew');
-    doc.text('สวัสดี ยินดีที่ได้รู้จักคุณ', 15, 15);
 
-    doc.save('custom_fonts.pdf');
+    (doc as any).autoTable({
+      head: this.head,
+      styles: { halign: 'center' },
+      headStyles: { fillColor: [93, 173, 226] },
+      body: this.data,
+      margin: {top: 35},
+      theme: 'grid'
+    });
+
+    // Open PDF document in new tab
+    doc.output('dataurlnewwindow');
+
+    // Download PDF document
+    doc.save('project-c10-report-'+date_fomat+'-'+time_fomat+'.pdf');
   }
-
-  // createPdf() {
-  //   var date: Date = new Date();
-  //   var date_fomat =  date.toLocaleDateString( 'en-GB', { timeZone: 'Asia/Bangkok' });
-  //   var time_fomat =  date.toLocaleTimeString( 'en-GB', { timeZone: 'Asia/Bangkok' });
-  //   var doc = new jsPDF('portrait', 'px', 'a4');
-
-  //   doc.setFontSize(18);
-  //   doc.setFont('"Bai Jamjuree", sans-serif');
-  //   doc.text('Project-C10 Export Report PDF', 30, 25);
-  //   doc.setFontSize(11);
-  //   doc.setTextColor(100);
-
-
-  //   (doc as any).autoTable({
-  //     head: this.head,
-  //     styles: { halign: 'center' },
-  //     headStyles: { fillColor: [93, 173, 226] },
-  //     body: this.data,
-  //     theme: 'grid'
-  //   });
-
-  //   // Open PDF document in new tab
-  //   doc.output('dataurlnewwindow');
-
-  //   // Download PDF document
-  //   doc.save('project-c10-report-'+date_fomat+'-'+time_fomat+'.pdf');
-  // }
 }

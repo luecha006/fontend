@@ -3,7 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { MenuItem, PrimeNGConfig} from "primeng/api";
 import { FormBuilder, FormGroup} from "@angular/forms";
-import { Password } from 'primeng/password';
 
 @Component({
   selector: 'app-root',
@@ -19,9 +18,8 @@ export class AppComponent implements OnInit {
   list_Warn: MenuItem[];
 
   admin_name: string;
-  user: string = "admin";
-  pass: string = "cpe2564";
-  //logIn_logOut: string;
+  adminResponse: string;
+  temperature: any;
 
   isLogin: boolean; //สถานะการ log in
   isRegisterAdmin_Form: boolean;
@@ -76,17 +74,15 @@ export class AppComponent implements OnInit {
     });
 
     this.formTemperature = fb.group({
-      temperature: fb.control(37.0)
-    })
+      temperature: fb.control('')
+    });
 
     this.formDelect = fb.group({
       username: fb.control('')
     });
-
   }
 
   ngOnInit() {
-
     this.primengConfig.ripple = true;
     this.check_Login();
 
@@ -121,29 +117,36 @@ export class AppComponent implements OnInit {
       },
     ];
 
-    this.list_Warn = [
-      {
-        label: "รายการแจ้งเตือน",
+    this.appService.extractTemperature().subscribe(
+      (response) => {
+        // console.log('response ',response);
+        this.temperature = response;
+        this.formTemperature.setValue({temperature: response});
       },
-      {
-        separator: true,
-        items: [
-          {
-            label: "ตรวจพบอุณหภูิเกินที่กำหนด",
-            icon: "pi pi-circle-on",
-          },
-          {
-            label: "ตรวจพบอุณหภูิเกินที่กำหนด",
-            icon: "pi pi-circle-on",
-          },
-        ],
-      },
-    ];
-  }
+      (error) => {
+        console.log(error);
+      }
+    );
 
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   console.log("ngOnChanges: ", changes);
-  // }
+    // this.list_Warn = [
+    //   {
+    //     label: "รายการแจ้งเตือน",
+    //   },
+    //   {
+    //     separator: true,
+    //     items: [
+    //       {
+    //         label: "ตรวจพบอุณหภูิเกินที่กำหนด",
+    //         icon: "pi pi-circle-on",
+    //       },
+    //       {
+    //         label: "ตรวจพบอุณหภูิเกินที่กำหนด",
+    //         icon: "pi pi-circle-on",
+    //       },
+    //     ],
+    //   },
+    // ];
+  }
 
   register(): void {
     if (this.isLogin === false) {
@@ -183,16 +186,16 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit_Login(): void {
-    // alert("submit login")
     if (this.formLogin.value.username === '' && this.formLogin.value.password === '') {
       this.message_error_Login = "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง.";
     } else {
       this.appService.login(this.formLogin.value).subscribe((response) => {
+        this.adminResponse = response.username;
+        // console.log('admin ',this.adminName);
         this.isLogin = true;
         this.isLogout_form = false;
         this.message_error_Login = '';
         this.check_Login();
-        // console.log(response);
       }, (error) => {
         console.log(error);
         this.message_error_Login = "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง.";
@@ -290,7 +293,7 @@ export class AppComponent implements OnInit {
         },
       ];
     } else {
-      this.admin_name = this.formLogin.value.username;
+      this.admin_name = this.adminResponse;
       this.list_Users = [
         {
           label: "เพิ่มสมาชิก",
@@ -363,8 +366,24 @@ export class AppComponent implements OnInit {
     })
   }
 
-  onSetTemPeraTure(): void {
+  onSubmitTemPeraTure(): void {
+    var pattern = {
+      admin_name: this.adminResponse,
+      temperature: this.formTemperature.value.temperature
+    }
+
+    this.appService.saveTemperature(pattern).subscribe((response) => {
+      this.isSetTemperature_form = false;
+      this.temperature = response;
+    }, (error) => {
+      console.log(error);
+      alert('เปลี่ยนแปลงอุณหภูมิล้มแหล้ว');
+    });
+  }
+
+  onCancelTemPeraTure(): void{
     this.isSetTemperature_form = false;
+    this.formTemperature.setValue({temperature: this.temperature});
   }
 
   onRegisterAdmin(): void {
@@ -394,8 +413,6 @@ export class AppComponent implements OnInit {
       this.appService.register(dataRegister).subscribe((response) => {
         this.isRegisterAdmin_Form = false;
         this.message_error_Register = "";
-        console.log('response ', response)
-
         this.formRegister.setValue({
           username: '',
           password: '',
