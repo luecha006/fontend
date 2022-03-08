@@ -9,7 +9,7 @@ export class ExportService {
 
   constructor(private http: HttpClient) { }
 
-  Export(data: any): Observable<any>{
+  Report(data: any): Observable<any>{
     return this.http.post<any>('http://localhost:8080/facemask/ExportPage', data);
   }
 }

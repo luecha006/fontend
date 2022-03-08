@@ -5,13 +5,13 @@
     </div>
 
     <div class="container">
-        <form [formGroup]="duration">
+        <form [formGroup]="duration" (ngSubmit)="onSubmit()">
             <div class="mt-3">
                 <div class="grid">
-                    <div class="col-5 d-flex justify-content-end align-items-center">
+                    <div class="col-4 d-flex justify-content-end align-items-center">
                         <label class="d-flex align-items-center" for="date">จากเดือน</label>
                     </div>
-                    <div class="col-7 d-flex justify-content-start align-items-center">
+                    <div class="col-8 d-flex justify-content-start align-items-center">
                         <p-calendar class="mr-3" formControlName="s_month"  view="month" dateFormat="mm/yy"
                             [yearNavigator]="true" [showIcon]="true" placeholder="เลือกเดือน" [maxDate]="duration.value.e_Month"
                             [readonlyInput]="true" [readonlyInput]="true" inputId="month" yearRange="2000:2030">
@@ -20,10 +20,10 @@
                 </div>
                 <div class="mt-2">
                     <div class="grid">
-                        <div class="col-5 d-flex justify-content-end align-items-center">
+                        <div class="col-4 d-flex justify-content-end align-items-center">
                             <label class="d-flex align-items-center" for="date">ไปยังเดือน</label>
                         </div>
-                        <div class="col-7 d-flex justify-content-start align-items-center">
+                        <div class="col-8 d-flex justify-content-start align-items-center">
                             <p-calendar formControlName="e_month" view="month" dateFormat="mm/yy" [yearNavigator]="true"
                                 [showIcon]="true" placeholder="เลือกเดือน" [minDate]="duration.value.s_Month" [readonlyInput]="true"
                                 [readonlyInput]="true" inputId="month" yearRange="2000:2030"></p-calendar>
@@ -33,10 +33,10 @@
 
                 <div class="mt-2">
                     <div class="grid">
-                        <div class="col-5"></div>
-                        <div class="col-7 d-flex flex-wrap justify-content-start align-items-center">
-                            <button pButton pRipple type="button" icon="pi pi-file-pdf"
-                                class="p-button-rounded style-button" (click)="onDownload()" label="download pdf"
+                        <div class="col-4"></div>
+                        <div class="col-8 d-flex flex-wrap justify-content-start align-items-center">
+                            <button pButton pRipple type="submit" icon="pi pi-file-pdf"
+                                class="p-button-rounded style-button" label="download pdf"
                                 [style]="{'width': '240px','height': '32px'}">
                             </button>
                         </div>
