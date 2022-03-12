@@ -1,8 +1,8 @@
 import { AppService } from './app.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { MenuItem, PrimeNGConfig} from "primeng/api";
-import { FormBuilder, FormGroup} from "@angular/forms";
+import { MenuItem, PrimeNGConfig } from "primeng/api";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -17,10 +17,9 @@ export class AppComponent implements OnInit {
   list_Users: MenuItem[];
   list_Warn: MenuItem[];
 
-  admin_name: string;
-  adminResponse: string;
-  temperature: any;
-
+  admin_name: string; //ชื่อ admin ที่จะใช้แสดงโชว์
+  adminResponse: string; //ชื่อ admin ที่ได้จาก database
+  temperature: any; //ค่าอุณหภูมิที่ดึงมาจาก database
   isLogin: boolean; //สถานะการ log in
   isRegisterAdmin_Form: boolean;
   isChangPassWord_Form: boolean;
@@ -44,7 +43,6 @@ export class AppComponent implements OnInit {
 
   constructor(@Inject(FormBuilder) fb: FormBuilder
     , private appService: AppService
-    , private primengConfig: PrimeNGConfig
     , private router: Router
     , private activatedRoute: ActivatedRoute) {
 
@@ -54,6 +52,8 @@ export class AppComponent implements OnInit {
     this.isSetTemperature_form = false;
     this.isLogout_form = false;
     this.isDelect_Form = false;
+
+    this.appService.setIsLogin(this.isLogin);
 
     this.formLogin = fb.group({
       username: fb.control(''),
@@ -83,69 +83,73 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.primengConfig.ripple = true;
-    this.check_Login();
+    console.log('app-component');
 
+    this.CreateLoginItem();
     this.list_Menu = [
       {
         label: "หน้าแรก",
         icon: "pi pi-fw pi-home",
         command: () => {
-          this.display_Home();
+          this.HomePage();
         },
       },
       {
         label: "ตารางแสดงผล",
         icon: "pi pi-fw pi-table",
         command: () => {
-          this.display_Table();
+          this.DisplayTablePage();
         },
       },
       {
         label: "ค้นหาข้อมูล",
         icon: "pi pi-fw pi-search",
         command: () => {
-          this.display_SearchInformation();
+          this.DisplaySearchInformationPage();
         },
       },
       {
         label: "รายงาน",
         icon: "pi pi-fw pi-file-pdf",
         command: () => {
-          this.display_Export();
+          this.DisplayExportPage();
         },
       },
     ];
 
-    this.appService.extractTemperature().subscribe(
+    this.appService.extractTemperature().subscribe((response) => {
+      this.temperature = response;
+      console.log('Temperature is ', this.temperature);
+      this.formTemperature.setValue({ temperature: response });
+      this.appService.setTemperature(response);
+    }, (error) => {
+      console.log(error);
+    });
+
+    //ตรวจสอบ admin ว่ามี admin หรือยัง ถ้ามี < 1 จะสร้างให้อัตโนมัติ 1 id
+    this.appService.examineAdmin().subscribe(
       (response) => {
-        // console.log('response ',response);
-        this.temperature = response;
-        this.formTemperature.setValue({temperature: response});
+        console.log('response app-comp', response);
+        if (response < 1) {
+          const dateTime = new Date();
+          var admin_root = {
+            date: dateTime.toLocaleDateString("en-GB", { timeZone: "Asia/Bangkok" }),
+            time: dateTime.toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok" }),
+            username: "admin",
+            password: "project-c10",
+            type_admin: "root"
+          }
+          this.appService.register(admin_root).subscribe((response) => {
+            // console.log('admin_root is ', response);
+          }, (error) => {
+            console.log(error);
+          });
+        }
       },
       (error) => {
         console.log(error);
-      }
-    );
+      });
 
-    // this.list_Warn = [
-    //   {
-    //     label: "รายการแจ้งเตือน",
-    //   },
-    //   {
-    //     separator: true,
-    //     items: [
-    //       {
-    //         label: "ตรวจพบอุณหภูิเกินที่กำหนด",
-    //         icon: "pi pi-circle-on",
-    //       },
-    //       {
-    //         label: "ตรวจพบอุณหภูิเกินที่กำหนด",
-    //         icon: "pi pi-circle-on",
-    //       },
-    //     ],
-    //   },
-    // ];
   }
 
   register(): void {
@@ -174,13 +178,14 @@ export class AppComponent implements OnInit {
 
   onLogout(): void {
     this.isLogin = false;
-    this.check_Login();
+    this.CreateLoginItem();
 
     if (this.formLogin.value.remember === false) {
       // ถ้าไม่ติกให้จดจำฉันไว้ให้ username, password = ค่าว่าง
       this.formLogin.setValue({ username: '', password: '', remember: false });
     }
   }
+
   onLogin(): void {
     this.isLogout_form = true;
   }
@@ -191,11 +196,11 @@ export class AppComponent implements OnInit {
     } else {
       this.appService.login(this.formLogin.value).subscribe((response) => {
         this.adminResponse = response.username;
-        // console.log('admin ',this.adminName);
         this.isLogin = true;
         this.isLogout_form = false;
         this.message_error_Login = '';
-        this.check_Login();
+        this.appService.setIsLogin(this.isLogin);
+        this.CreateLoginItem();
       }, (error) => {
         console.log(error);
         this.message_error_Login = "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง.";
@@ -250,7 +255,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  check_Login(): void {
+  CreateLoginItem(): void {
     //ตรวจสอบ form หน้า login ถ้าล็อกอินแสดงรูปแบบที่1 ไม่ล็อกอินแสดงรูปแบบที่2
     if (this.isLogin === false) {
       //เช็คว่ามีการ login หรือไม่
@@ -357,6 +362,7 @@ export class AppComponent implements OnInit {
       this.formChanePassword.setValue({ password: '', confirmPassword: '' });
     }
   }
+
   onCancel_ChangPassword(): void {
     this.isChangPassWord_Form = false;
     this.message_error_Changpassword = "";
@@ -367,27 +373,31 @@ export class AppComponent implements OnInit {
   }
 
   onSubmitTemPeraTure(): void {
-    var pattern = {
-      admin_name: this.adminResponse,
-      temperature: this.formTemperature.value.temperature
-    }
+    if (this.formTemperature.value.temperature === this.temperature) {
+      alert('การเปลี่ยนแปลงค่าอุณหภูมิจะต้องเป็นค่าที่ต่างจากเดิม');
+    } else {
+      var pattern = {
+        admin_name: this.adminResponse,
+        temperature: this.formTemperature.value.temperature
+      }
 
-    this.appService.saveTemperature(pattern).subscribe((response) => {
-      this.isSetTemperature_form = false;
-      this.temperature = response;
-    }, (error) => {
-      console.log(error);
-      alert('เปลี่ยนแปลงอุณหภูมิล้มแหล้ว');
-    });
+      this.appService.saveTemperature(pattern).subscribe((response) => {
+        this.isSetTemperature_form = false;
+        this.temperature = response;
+        this.appService.setTemperature(response);
+      }, (error) => {
+        console.log(error);
+        alert('เปลี่ยนแปลงอุณหภูมิล้มแหล้ว');
+      });
+    }
   }
 
-  onCancelTemPeraTure(): void{
+  onCancelTemPeraTure(): void {
     this.isSetTemperature_form = false;
-    this.formTemperature.setValue({temperature: this.temperature});
+    this.formTemperature.setValue({ temperature: this.temperature });
   }
 
   onRegisterAdmin(): void {
-
     const dateTime = new Date();
     // console.log("time ",dateTime.toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok" }));
     // console.log("date ",dateTime.toLocaleDateString("en-GB", { timeZone: "Asia/Bangkok" }));
@@ -444,24 +454,40 @@ export class AppComponent implements OnInit {
     });
   }
 
-  display_Home(): void {
-    this.router.navigate(
-      ["home"],
-      { relativeTo: this.activatedRoute.parent });
+  HomePage(): void {
+    if (this.isLogin === false) {
+      this.onLogin();
+    } else {
+      this.router.navigate(
+        ["home"],
+        { relativeTo: this.activatedRoute.parent });
+    }
   }
-  display_Table(): void {
-    this.router.navigate(
-      ["display-table"],
-      { relativeTo: this.activatedRoute.parent });
+  DisplayTablePage(): void {
+    if (this.isLogin === false) {
+      this.onLogin();
+    } else {
+      this.router.navigate(
+        ["display-table"],
+        { relativeTo: this.activatedRoute.parent });
+    }
   }
-  display_SearchInformation(): void {
-    this.router.navigate(
-      ["search-information"],
-      { relativeTo: this.activatedRoute.parent });
+  DisplaySearchInformationPage(): void {
+    if (this.isLogin === false) {
+      this.onLogin();
+    } else {
+      this.router.navigate(
+        ["search-information"],
+        { relativeTo: this.activatedRoute.parent });
+    }
   }
-  display_Export(): void {
-    this.router.navigate(
-      ["export"],
-      { relativeTo: this.activatedRoute.parent });
+  DisplayExportPage(): void {
+    if (this.isLogin === false) {
+      this.onLogin();
+    } else {
+      this.router.navigate(
+        ["export"],
+        { relativeTo: this.activatedRoute.parent });
+    }
   }
 }

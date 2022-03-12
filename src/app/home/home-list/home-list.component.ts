@@ -1,15 +1,20 @@
+import { AppService } from './../../app.service';
 import { ConvertFaceMaskPattern } from '../../module/ConvertFaceMaskPattern';
 import { ConvertDateTime } from '../../module/ConvertDateTime';
 import { HomeService } from '../home.service';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AppComponent } from 'src/app/app.component';
 @Component({
   selector: 'app-home-list',
   templateUrl: './home-list.component.html',
   styleUrls: ['./home-list.component.scss'],
 })
 export class HomeListComponent implements OnInit {
+
+  @Input() tem!: AppComponent
+
   monthNames = [
     'January',
     'February',
@@ -24,8 +29,11 @@ export class HomeListComponent implements OnInit {
     'November',
     'December',
   ];
+
   item_Pattern: SelectItem[];
   value_Pattern: any;
+  temperature: number; //ค่าอุณหภูมิที่ดึงมาจาก database จาก app.component
+  isLogin: boolean; //สถานะการ log in ดึงมาจาก app.component
 
   // charLine
   data_Tabel: any;
@@ -86,9 +94,11 @@ export class HomeListComponent implements OnInit {
 
   constructor(
     @Inject(FormBuilder) fb: FormBuilder,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private appService: AppService
   ) {
     this.value_Pattern = '0'; //start pattern
+    console.log('isLogin ',this.appService.getIsLogin());
 
     this.currentDayFormat_Form = fb.group({
       s_time: fb.control(''),
@@ -113,7 +123,9 @@ export class HomeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log('home componenr');
+    console.log('home componenr');
+    console.log('app ',this.tem);
+    this.isLogin = !this.appService.getIsLogin();
     //ดึงข้อมูลมาทั้งหมดมาแสดงเป็นรายวัน
     this.homeService.selectHomePageDateCurrent().subscribe(
       (response) => {
@@ -139,6 +151,8 @@ export class HomeListComponent implements OnInit {
 
   //ฟังก์ชันแยกข้อมูลแต่ละแบบเพื่อเอาไปแสดง chartLine และ chartPie
   onSplitDataToCurrentDay(response: any): void {
+    this.temperature = this.appService.getTemperature();
+    // console.log('home componenr temperature: ',this.temperature);
     // เคลียร์ค่าให้เป็นค่าว่างทั้งหมดก่อน
     this.chartLineData = [];
     this.chartLineLable = [];
@@ -186,7 +200,7 @@ export class HomeListComponent implements OnInit {
       }
 
       //แยกข้อมูลของอุณหภูมิเกิน
-      if (response[i].temperature > 37.0) {
+      if (response[i].temperature > this.temperature) {
         //37.00 คือค่าของอุณหภูมิ เอามาจากตาราง
         this.highTemperature_CurrentDay.push(response[i]);
         ChartPie_highTemp += 1;
@@ -209,6 +223,8 @@ export class HomeListComponent implements OnInit {
 
   // สร้างข้อมูลให้ ChartBar แสดงเป็นอาทิตย์
   onSplitDataToWeekly(request: any) {
+    this.temperature = this.appService.getTemperature();
+
     this.ChartBarLables_weekly = [];
     this.ChartBarDataPatternWithMask_weekly = [];
     this.ChartBarDataPatternWithOutMask_weekly = [];
@@ -287,7 +303,7 @@ export class HomeListComponent implements OnInit {
       }
 
       //แยกข้อมูลของอุณหภูมิเกิน
-      if (request[i].temperature > 37.0) {
+      if (request[i].temperature > this.temperature) {
         //37.00 คือค่าของอุณหภูมิ เอามาจากตาราง
         this.highTemperature_Weekly.push(request[i]);
         ChartPie_highTemp += 1;
@@ -305,6 +321,8 @@ export class HomeListComponent implements OnInit {
   }
 
   onSplitDataToMonthly(request: any) {
+    this.temperature = this.appService.getTemperature();
+
     this.ChartBarLables_monthly = [];
     this.ChartBarDataPatternWithMask_monthly = [];
     this.ChartBarDataPatternWithOutMask_monthly = [];
@@ -335,11 +353,10 @@ export class HomeListComponent implements OnInit {
           } else if (request[j].maskpattern === 'm') {
             amount_m = amount_m + 1;
           }
-          if (request[j].temperature > 37.0) {
+          if (request[j].temperature > this.temperature) {
             amount_h = amount_h + 1;
           }
         }
-        // console.log('The current month is ',lable);
       }
       this.ChartBarDataPatternWithMask_monthly.push(amount_w);
       this.ChartBarDataPatternWithOutMask_monthly.push(amount_o);
@@ -384,7 +401,7 @@ export class HomeListComponent implements OnInit {
       }
 
       //แยกข้อมูลของอุณหภูมิเกิน
-      if (request[i].temperature > 37.0) {
+      if (request[i].temperature > this.temperature) {
         //37.00 คือค่าของอุณหภูมิ เอามาจากตาราง
         this.highTemperature_Monthly.push(request[i]);
         ChartPie_highTemp += 1;
@@ -411,7 +428,6 @@ export class HomeListComponent implements OnInit {
       if (!lables.includes(lable)) {
         lables.push(lable);
       }
-      // console.log('The current month is ',lable);
     }
     return lables;
   }
@@ -437,7 +453,6 @@ export class HomeListComponent implements OnInit {
 
       this.homeService.selectHomePageFormat(currentDay).subscribe(
         (response) => {
-          // console.log('selectCurrentDayFormat ', response);
           this.onSplitDataToCurrentDay(response);
         },
         (error) => {
@@ -465,8 +480,6 @@ export class HomeListComponent implements OnInit {
           { timeZone: 'Asia/Bangkok' }
         ),
       };
-
-      // console.log('weekly ', weekly);
 
       this.homeService.selectHomePageFormat(weekly).subscribe(
         (response) => {
@@ -502,8 +515,6 @@ export class HomeListComponent implements OnInit {
           timeZone: 'Asia/Bangkok',
         }),
       };
-
-      // console.log('monthly ', monthly);
 
       this.homeService.selectHomePageFormat(monthly).subscribe(
         (response) => {
