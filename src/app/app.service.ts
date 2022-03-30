@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,22 @@ export class AppService {
 
   isLogin: boolean;
   temperature: number;
-  req: any;
-  constructor(private http: HttpClient) { }
+
+  public loginStatus = new Subject<boolean>();
+  // dataEmitter = new EventEmitter<boolean>();
+
+  constructor(private http: HttpClient) {
+    this.setIsLogin(false);
+  }
+
+  // raiseDataEmitterEven(data: boolean){
+  //   this.dataEmitter.emit(data);
+  // }
+
+  setLoginStatus(data: boolean){
+    this.loginStatus.next(data);
+    this.setIsLogin(data);
+  }
 
   setTemperature(value: number): void {
     this.temperature = value;
@@ -31,35 +45,35 @@ export class AppService {
       username: data.username,
       password: data.password
     }
-    return this.http.post<any>('http://localhost:8080/admin/login', dataLogin);
+    return this.http.post<any>('http://35.213.141.41:8080/admin/login', dataLogin);
   }
 
   register(data: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/admin/register', data);
+    return this.http.post<any>('http://35.213.141.41:8080/admin/register', data);
   }
 
   changePassword(data: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/admin/changepassword', data);
+    return this.http.post<any>('http://35.213.141.41:8080/admin/changepassword', data);
   }
 
   fetchAllAdmin(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/admin/fetchAllAdmin');
+    return this.http.get<any>('http://35.213.141.41:8080/admin/fetchAllAdmin');
   }
 
   delectAdmin(data: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/admin/delete', data);
+    return this.http.post<any>('http://35.213.141.41:8080/admin/delete', data);
   }
 
   extractTemperature(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/temperature/extract');
+    return this.http.get<any>('http://35.213.141.41:8080/temperature/extract');
   }
 
   saveTemperature(data: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/temperature/save', data);
+    return this.http.post<any>('http://35.213.141.41:8080/temperature/save', data);
   }
 
   examineAdmin(): Observable<any> {
-    return this.http.get<any>('http://localhost:8080/admin/examineadmin');
+    return this.http.get<any>('http://35.213.141.41:8080/admin/examineadmin');
   }
 
 }

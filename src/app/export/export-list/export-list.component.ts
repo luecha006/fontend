@@ -79,7 +79,7 @@ export class ExportListComponent implements OnInit {
     var doc = new jsPDF('portrait', 'px', 'a4');
 
     doc.setFontSize(18);
-    doc.text('Project-C10 Export Report PDF', 30, 25);
+    doc.text('Project-C10 Report Data To PDF', 30, 25);
     doc.setFontSize(11);
     doc.setTextColor(100);
 

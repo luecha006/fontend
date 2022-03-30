@@ -20,14 +20,14 @@ export class ConvertFaceMaskPattern{
     let patternFullName = '';
     if(pattern === 'w')
     {
-      patternFullName = 'Wear a mask properly';
+      patternFullName = 'wearing a mask';
     }
     else if (pattern === 'o')
     {
       patternFullName = 'not wearing a mask'
     }
     else if (pattern === 'm'){
-      patternFullName = 'wearing a mask the wrong way'
+      patternFullName = 'Wearing a mask the wrong way'
     }
     return patternFullName;
   }

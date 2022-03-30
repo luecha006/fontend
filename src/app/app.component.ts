@@ -53,8 +53,6 @@ export class AppComponent implements OnInit {
     this.isLogout_form = false;
     this.isDelect_Form = false;
 
-    this.appService.setIsLogin(this.isLogin);
-
     this.formLogin = fb.group({
       username: fb.control(''),
       password: fb.control(''),
@@ -83,8 +81,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('app-component');
-
+    // console.log('app-component');
+    // this.appService.setLoginStatus(this.isLogin);
     this.CreateLoginItem();
     this.list_Menu = [
       {
@@ -129,7 +127,7 @@ export class AppComponent implements OnInit {
     //ตรวจสอบ admin ว่ามี admin หรือยัง ถ้ามี < 1 จะสร้างให้อัตโนมัติ 1 id
     this.appService.examineAdmin().subscribe(
       (response) => {
-        console.log('response app-comp', response);
+        // console.log('response app-comp', response);
         if (response < 1) {
           const dateTime = new Date();
           var admin_root = {
@@ -177,8 +175,10 @@ export class AppComponent implements OnInit {
   }
 
   onLogout(): void {
+    this.HomePage();
     this.isLogin = false;
     this.CreateLoginItem();
+    this.appService.setLoginStatus(this.isLogin);
 
     if (this.formLogin.value.remember === false) {
       // ถ้าไม่ติกให้จดจำฉันไว้ให้ username, password = ค่าว่าง
@@ -199,7 +199,9 @@ export class AppComponent implements OnInit {
         this.isLogin = true;
         this.isLogout_form = false;
         this.message_error_Login = '';
-        this.appService.setIsLogin(this.isLogin);
+
+        this.appService.setLoginStatus(this.isLogin);
+
         this.CreateLoginItem();
       }, (error) => {
         console.log(error);
@@ -227,7 +229,7 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit_Delect(event: any): void {
-    console.log('event ', event)
+    // console.log('event ', event)
     let dataDelectAdmin = {
       username: event.username
     };
@@ -350,8 +352,6 @@ export class AppComponent implements OnInit {
         password: this.formChanePassword.value.password
       };
       this.appService.changePassword(dataChangePassword).subscribe((response) => {
-        console.log('change password:', dataChangePassword);
-        console.log('response ', response);
         this.message_error_Changpassword = "";
         this.formChanePassword.setValue({ password: '', confirmPassword: '' });
       }, (error) => {

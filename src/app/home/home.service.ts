@@ -11,14 +11,14 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   selectHomePageDateCurrent(): Observable<any>{
-    return this.http.get<any>("http://localhost:8080/facemask/selectHomePageDateCurrent");
+    return this.http.get<any>("http://35.213.141.41:8080/facemask/selectHomePageDateCurrent");
   }
 
   fetchAllMaskPattern(): Observable<any>{
-    return this.http.get<any>('http://localhost:8080/facemask/fetchAllMaskPattern');
+    return this.http.get<any>('http://35.213.141.41:8080/facemask/fetchAllMaskPattern');
   }
 
   selectHomePageFormat(data: any): Observable<any>{
-    return this.http.post<any>("http://localhost:8080/facemask/selectWithMaskPattern", data);
+    return this.http.post<any>("http://35.213.141.41:8080/facemask/selectWithMaskPattern", data);
   }
 }

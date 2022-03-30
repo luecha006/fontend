@@ -13,8 +13,6 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class HomeListComponent implements OnInit {
 
-  @Input() tem!: AppComponent
-
   monthNames = [
     'January',
     'February',
@@ -33,7 +31,7 @@ export class HomeListComponent implements OnInit {
   item_Pattern: SelectItem[];
   value_Pattern: any;
   temperature: number; //ค่าอุณหภูมิที่ดึงมาจาก database จาก app.component
-  isLogin: boolean; //สถานะการ log in ดึงมาจาก app.component
+  loginStatus: boolean; //กำหนดตัวแปรขึ้นมารับค่า login ของ service
 
   // charLine
   data_Tabel: any;
@@ -98,7 +96,10 @@ export class HomeListComponent implements OnInit {
     private appService: AppService
   ) {
     this.value_Pattern = '0'; //start pattern
-    console.log('isLogin ',this.appService.getIsLogin());
+
+    console.log('setting Login is ', this.appService.getIsLogin())
+    this.loginStatus = !this.appService.getIsLogin();
+
 
     this.currentDayFormat_Form = fb.group({
       s_time: fb.control(''),
@@ -123,9 +124,11 @@ export class HomeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('home componenr');
-    console.log('app ',this.tem);
-    this.isLogin = !this.appService.getIsLogin();
+    this.appService.loginStatus.subscribe((value) => {
+      console.log('value is ', value)
+      this.loginStatus = !value
+    });
+
     //ดึงข้อมูลมาทั้งหมดมาแสดงเป็นรายวัน
     this.homeService.selectHomePageDateCurrent().subscribe(
       (response) => {
@@ -254,7 +257,7 @@ export class HomeListComponent implements OnInit {
           } else if (request[j].maskpattern === 'm') {
             amount_m = amount_m + 1;
           }
-          if (request[j].temperature > 37.0) {
+          if (request[j].temperature > this.temperature) {
             amount_h = amount_h + 1;
           }
         }
