@@ -127,6 +127,12 @@ export class HomeListComponent implements OnInit {
     this.appService.loginStatus.subscribe((value) => {
       console.log('value is ', value)
       this.loginStatus = !value
+      if(this.loginStatus == true){
+        this.currentDayFormat_Form.setValue({ s_time: '', e_time: '' });
+        this.weeklyFormat_Form.setValue({ s_date: '', e_date: '' });
+        this.monthlyFormat_Form.setValue({ s_month: '', e_month: '' });
+        this.value_Pattern = '0';
+      }
     });
 
     //ดึงข้อมูลมาทั้งหมดมาแสดงเป็นรายวัน
