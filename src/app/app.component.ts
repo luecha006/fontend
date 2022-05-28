@@ -134,7 +134,7 @@ export class AppComponent implements OnInit {
             date: dateTime.toLocaleDateString("en-GB", { timeZone: "Asia/Bangkok" }),
             time: dateTime.toLocaleTimeString("en-GB", { timeZone: "Asia/Bangkok" }),
             username: "admin",
-            password: "project-c10",
+            password: "000000",
             type_admin: "root"
           }
           this.appService.register(admin_root).subscribe((response) => {

@@ -10,6 +10,6 @@ export class DisplayTableService {
   constructor(private http: HttpClient) { }
 
   fetchAllMaskPattern(): Observable<any>{
-    return this.http.get<any>('http://35.213.141.41:8080/facemask/fetchAllMaskPattern');
+    return this.http.get<any>('http://localhost:8080/facemask/fetchAllMaskPattern');
   }
 }
